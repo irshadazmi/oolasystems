@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0A0A0A">
+    <title>Oola Systems — Design System v1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/style.css?v=1.0" rel="stylesheet">
+    <style>
+        .ds-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 16px 24px;
+        }
+        .ds-nav a {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+            margin-right: 20px;
+        }
+        .ds-nav a:hover { color: var(--color-primary); }
+        .ds-section {
+            padding: 64px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .ds-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+        .ds-swatch {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="ds-nav">
+        <strong style="color: var(--color-text); margin-right: 32px;">Oola DS v1.0</strong>
+        <a href="#tokens">Tokens</a>
+        <a href="#typography">Typography</a>
+        <a href="#buttons">Buttons</a>
+        <a href="#cards">Cards</a>
+        <a href="#forms">Forms</a>
+        <a href="#components">Components</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero hero-mesh">
+        <p class="eyebrow">Design System Preview</p>
+        <h1 class="hero__title">Enterprise Software Engineering</h1>
+        <p class="hero__subtitle">Premium dark theme with Tomato Red accent. Phase 1 foundation — tokens, components, Bootstrap overrides.</p>
+        <div class="hero__actions">
+            <a href="#tokens" class="btn-oola-primary">Explore Tokens</a>
+            <a href="#forms" class="btn-oola-secondary">View Forms</a>
+        </div>
+    </section>
+
+    <!-- Tokens -->
+    <section id="tokens" class="ds-section">
+        <p class="ds-label">01 — Design Tokens</p>
+        <h2 class="section-title">Color Palette</h2>
+        <div class="row g-3 mt-3">
+            <div class="col-auto text-center">
+                <div class="ds-swatch" style="background: #0A0A0A;"></div>
+                <small class="text-muted d-block mt-2">BG #0A0A0A</small>
+            </div>
+            <div class="col-auto text-center">
+                <div class="ds-swatch" style="background: #FF6347;"></div>
+                <small class="text-muted d-block mt-2">Primary #FF6347</small>
+            </div>
+            <div class="col-auto text-center">
+                <div class="ds-swatch" style="background: #171717;"></div>
+                <small class="text-muted d-block mt-2">Card #171717</small>
+            </div>
+            <div class="col-auto text-center">
+                <div class="ds-swatch" style="background: #BFBFBF;"></div>
+                <small class="text-muted d-block mt-2">Secondary #BFBFBF</small>
+            </div>
+            <div class="col-auto text-center">
+                <div class="ds-swatch" style="background: #2B2B2B;"></div>
+                <small class="text-muted d-block mt-2">Border #2B2B2B</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Typography -->
+    <section id="typography" class="ds-section">
+        <p class="ds-label">02 — Typography</p>
+        <h1 class="page-title">Page Title</h1>
+        <p class="page-subtitle">Page subtitle — Inter 400, secondary grey, max-width 720px centered.</p>
+        <h2 class="section-title mt-5">Section Title</h2>
+        <p class="section-subtitle">Section subtitle for supporting context beneath headings.</p>
+        <p class="eyebrow mt-4">Eyebrow Label</p>
+        <p class="content-text">Body content text — used for paragraphs in mission, vision, and long-form sections. Line height 1.75 for readability on dark backgrounds.</p>
+    </section>
+
+    <!-- Buttons -->
+    <section id="buttons" class="ds-section">
+        <p class="ds-label">03 — Buttons</p>
+        <h2 class="section-title">Button Variants</h2>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#" class="btn-oola-primary">Primary CTA</a>
+            <a href="#" class="btn-oola-secondary">Secondary</a>
+            <a href="#" class="btn-oola-ghost">Ghost Link</a>
+            <a href="#" class="btn btn-primary">Bootstrap Primary (mapped)</a>
+        </div>
+    </section>
+
+    <!-- Cards -->
+    <section id="cards" class="ds-section">
+        <p class="ds-label">04 — Cards</p>
+        <h2 class="section-title">Card Components</h2>
+        <div class="row g-4 mt-2">
+
+            <div class="col-md-4">
+                <div class="feature-card reveal">
+                    <h5>Feature Card</h5>
+                    <p>Used for services and capabilities grid. Hover for lift effect.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="portfolio-card reveal reveal-delay-1">
+                    <div class="portfolio-img" style="background: linear-gradient(135deg, #1a1a1a, #2a1510); min-height: 160px;"></div>
+                    <div class="portfolio-content">
+                        <h5 class="portfolio-title">Case Study Card</h5>
+                        <p class="portfolio-desc">Portfolio / case study layout with tags and metrics.</p>
+                        <div class="portfolio-tags">
+                            <span>Laravel</span>
+                            <span>React</span>
+                            <span>AI</span>
+                        </div>
+                        <ul class="portfolio-metrics">
+                            <li>50% ↑ Efficiency</li>
+                            <li>High Adoption</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="value-card-simple reveal reveal-delay-2">
+                    <h5>Quality</h5>
+                    <p>Value card for mission/values grid sections.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="stat-bar mt-5 reveal">
+            <div class="stat-bar__item">
+                <span class="stat-bar__value">25+</span>
+                <span class="stat-bar__label">Years Experience</span>
+            </div>
+            <div class="stat-bar__item">
+                <span class="stat-bar__value">6</span>
+                <span class="stat-bar__label">GCC Countries</span>
+            </div>
+            <div class="stat-bar__item">
+                <span class="stat-bar__value">100+</span>
+                <span class="stat-bar__label">Projects Delivered</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Forms -->
+    <section id="forms" class="ds-section">
+        <p class="ds-label">05 — Forms</p>
+        <h2 class="section-title">Form Components</h2>
+        <div class="row g-4 mt-2">
+            <div class="col-md-6">
+                <div class="oola-form-card">
+                    <h4>Contact Form Card</h4>
+                    <p class="text-muted mb-4">Dark-themed form container replacing bg-white.</p>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="you@company.com">
+                    </div>
+                    <div class="mb-3">
+                        <label>Project Type</label>
+                        <select class="form-select">
+                            <option>AI Solutions</option>
+                            <option>Cloud Engineering</option>
+                            <option>Consultation</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Message</label>
+                        <textarea class="form-control" rows="3" placeholder="Tell us about your project"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100">Submit Inquiry</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="oola-form-card">
+                    <h4>Alerts &amp; Accordion</h4>
+                    <div class="alert alert-success mt-3">Message sent successfully!</div>
+                    <div class="alert alert-danger">Incorrect captcha answer.</div>
+                    <div class="accordion oola-accordion mt-4" id="dsFaq">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#dsFaq1">Sample FAQ question?</button>
+                            </h2>
+                            <div id="dsFaq1" class="accordion-collapse collapse show" data-bs-parent="#dsFaq">
+                                <div class="accordion-body">Accordion styled for dark theme with tomato red active state.</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#dsFaq2">Another question?</button>
+                            </h2>
+                            <div id="dsFaq2" class="accordion-collapse collapse" data-bs-parent="#dsFaq">
+                                <div class="accordion-body">Supports keyboard navigation and visible focus rings.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Components -->
+    <section id="components" class="ds-section">
+        <p class="ds-label">06 — Sections</p>
+        <h2 class="section-title">Section Patterns</h2>
+
+        <div class="cta-band mt-4 reveal">
+            <h3 class="cta-band__title">Ready to discuss your technology roadmap?</h3>
+            <p class="cta-band__subtitle">CTA band component for page endings.</p>
+            <a href="#" class="btn-oola-primary">Schedule a Consultation</a>
+        </div>
+
+        <div class="section-block section-accent mt-5 reveal">
+            <div class="text-center py-4">
+                <h2 class="section-title">Accent Section</h2>
+                <p class="section-subtitle">Replaces section-purple — tomato gradient mesh on card background.</p>
+                <div class="row g-4 justify-content-center mt-4">
+                    <div class="col-md-4"><div class="value-card-simple"><h5>Innovation</h5><p>Forward-thinking solutions.</p></div></div>
+                    <div class="col-md-4"><div class="value-card-simple"><h5>Integrity</h5><p>Trusted partnerships.</p></div></div>
+                    <div class="col-md-4"><div class="value-card-simple"><h5>Excellence</h5><p>High standards always.</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-main py-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <h6 class="footer-heading">Design System</h6>
+                    <ul>
+                        <li><a href="#tokens">Tokens</a></li>
+                        <li><a href="#typography">Typography</a></li>
+                        <li><a href="#buttons">Buttons</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="footer-heading">Oola Systems</h6>
+                    <p class="text-muted">Phase 1 — Design System Foundation</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="social-icons">
+                        <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom text-center py-3">© 2026 Oola Systems — Design System v1.0</div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+                });
+            }, { threshold: 0.12 });
+            document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+        } else {
+            document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+        }
+    </script>
+</body>
+</html>
