@@ -20,7 +20,6 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.submit');
-Route::post('/user', [UserController::class, 'store'])->name('user.submit');
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -31,67 +30,38 @@ Route::middleware('auth')
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-
+        Route::get('/', [PageController::class, 'admin'])->name('dashboard');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-        Route::get('/', [PageController::class, 'admin'])
-            ->name('dashboard');
 
         // Contacts
-
-        Route::get('/contacts', [ContactController::class, 'index'])
-            ->name('contacts.index');
-
-        Route::get('/contacts/{contact}', [ContactController::class, 'show'])
-            ->name('contacts.show');
-
-        Route::patch('/contacts/{contact}', [ContactController::class, 'update'])
-            ->name('contacts.update');
-
-        Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])
-            ->name('contacts.destroy');
+        Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
+        Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
+        Route::get('/contacts/{contact}/edit', [ContactController::class, 'edit'])->name('contacts.edit');
+        Route::patch('/contacts/{contact}', [ContactController::class, 'update'])->name('contacts.update');
+        Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
         // Inquiries
-
-        Route::get('/inquiries', [InquiryController::class, 'index'])
-            ->name('inquiries.index');
-
-        Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])
-            ->name('inquiries.show');
-
-        Route::patch('/inquiries/{inquiry}', [InquiryController::class, 'update'])
-            ->name('inquiries.update');
-
-        Route::delete('/inquiries/{inquiry}', [InquiryController::class, 'destroy'])
-            ->name('inquiries.destroy');
+        Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiries.index');
+        Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])->name('inquiries.show');
+        Route::get('/inquiries/{inquiry}/edit', [InquiryController::class, 'edit'])->name('inquiries.edit');
+        Route::patch('/inquiries/{inquiry}', [InquiryController::class, 'update'])->name('inquiries.update');
+        Route::delete('/inquiries/{inquiry}', [InquiryController::class, 'destroy'])->name('inquiries.destroy');
 
         // Users
-
-        Route::get('/users', [UserController::class, 'index'])
-            ->name('users.index');
-
-        Route::get('/users/{user}', [UserController::class, 'show'])
-            ->name('users.show');
-
-        Route::patch('/users/{user}', [UserController::class, 'update'])
-            ->name('users.update');
-
-        Route::delete('/users/{user}', [UserController::class, 'destroy'])
-            ->name('users.destroy');
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
         // Visitors
-
-        Route::get('/visitors', [VisitorController::class, 'index'])
-            ->name('visitors.index');
-
-        Route::get('/visitors/{visitor}', [VisitorController::class, 'show'])
-            ->name('visitors.show');
-
-        Route::patch('/visitors/{visitor}', [VisitorController::class, 'update'])
-            ->name('visitors.update');
-
-        Route::delete('/visitors/{visitor}', [VisitorController::class, 'destroy'])
-            ->name('visitors.destroy');
-
+        Route::get('/visitors', [VisitorController::class, 'index'])->name('visitors.index');
+        Route::get('/visitors/{visitor}', [VisitorController::class, 'show'])->name('visitors.show');
+        Route::get('/visitors/{visitor}/edit', [VisitorController::class, 'edit'])->name('visitors.edit');
+        Route::patch('/visitors/{visitor}', [VisitorController::class, 'update'])->name('visitors.update');
+        Route::delete('/visitors/{visitor}', [VisitorController::class, 'destroy'])->name('visitors.destroy');
     });
 
 Route::prefix('tutorials')->group(function () {

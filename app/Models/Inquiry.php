@@ -11,6 +11,7 @@ class Inquiry extends Model
         'email',
         'project_type',
         'message',
-        'status'
+        'response',
+        'status' => 'New',
     ];
 }

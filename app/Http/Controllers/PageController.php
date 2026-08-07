@@ -2,31 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Contact;
+use App\Models\Inquiry;
+use App\Models\User;
+use App\Models\Visitor;
 
 class PageController extends Controller
 {
-    public function home() {
+    public function home()
+    {
         return view('pages.home');
     }
 
-    public function about() {
+    public function about()
+    {
         return view('pages.about');
     }
 
-    public function services() {
+    public function services()
+    {
         return view('pages.services');
     }
 
-    public function portfolio() {
+    public function portfolio()
+    {
         return view('pages.portfolio');
     }
 
-    public function industries() {
+    public function industries()
+    {
         return view('pages.industries');
     }
 
-    public function tutorial() {
+    public function tutorial()
+    {
         return view('tutorial.index');
     }
 
@@ -36,12 +45,12 @@ class PageController extends Controller
     }
 
     public function admin()
-{
-    return view('admin.dashboard', [
-        'contactsCount'   => \App\Models\Contact::count(),
-        'inquiriesCount'  => \App\Models\Inquiry::count(),
-        'visitorsCount'   => \App\Models\Visitor::count(),
-        'usersCount'      => \App\Models\User::count(),
-    ]);
-}
+    {
+        return view('admin.dashboard', [
+            'contactsCount' => Contact::count(),
+            'inquiriesCount' => Inquiry::count(),
+            'visitorsCount' => Visitor::count(),
+            'usersCount' => User::count(),
+        ]);
+    }
 }

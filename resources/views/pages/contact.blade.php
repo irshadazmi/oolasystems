@@ -31,7 +31,7 @@
 
     <!-- Quick Form -->
     <section class="section-block" id="quick-form">
-        <div class="row align-items-top mb-4">
+        <div class="row align-items-stretch align-items-top mb-4">
             <div class="col-lg-6 col-12 mb-5">
 
                 <div class="eyebrow">
@@ -79,6 +79,21 @@
 
                         <li class="mb-3">
                             <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                            Experienced architects with 25+ years of enterprise expertise.
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                            AI-driven, cloud-native, and scalable solution recommendations.
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                            End-to-end delivery from strategy and design to implementation and support.
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-primary me-2"></i>
                             Transparent project planning, timelines, and engagement model.
                         </li>
 
@@ -114,17 +129,17 @@
                         @csrf
 
                         {{-- Success --}}
-                        @if (session('inquiry_success'))
+                        @if(session('inquiry_success'))
                             <div class="alert alert-success py-2">
                                 {{ session('inquiry_success') }}
                             </div>
                         @endif
 
                         {{-- Errors --}}
-                        @if ($errors->inquiry->any())
+                        @if($errors->inquiry->any())
                             <div class="alert alert-danger py-2">
                                 <ul class="mb-0 small">
-                                    @foreach ($errors->inquiry->all() as $error)
+                                    @foreach($errors->inquiry->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
                                 </ul>
@@ -132,67 +147,119 @@
                         @endif
 
                         <div class="mb-3">
-                            <input type="text" name="name"
-                                class="form-control @error('name', 'inquiry') is-invalid @enderror" placeholder="Your Name"
-                                value="{{ old('name') }}" required>
+
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-control @error('name','inquiry') is-invalid @enderror"
+                                placeholder="Your Full Name"
+                                value="{{ old('name') }}"
+                                required>
+
                         </div>
 
                         <div class="mb-3">
-                            <input type="email" name="email"
-                                class="form-control @error('email', 'inquiry') is-invalid @enderror"
-                                placeholder="Work Email" value="{{ old('email') }}" required>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control @error('email','inquiry') is-invalid @enderror"
+                                placeholder="Work Email"
+                                value="{{ old('email') }}"
+                                required>
+
                         </div>
 
                         <div class="mb-3">
-                            <select name="project_type"
-                                class="form-select @error('project_type', 'inquiry') is-invalid @enderror" required>
-                                <option value="">Select Service</option>
 
-                                <option>Artificial Intelligence</option>
+                            <select
+                                name="project_type"
+                                class="form-select @error('project_type','inquiry') is-invalid @enderror"
+                                required>
 
-                                <option>Software Engineering</option>
+                                <option value="">Select Project Type</option>
 
-                                <option>Cloud Solutions</option>
+                                <option value="Artificial Intelligence" {{ old('project_type')=='Artificial Intelligence' ? 'selected' : '' }}>Artificial Intelligence</option>
 
-                                <option>Data Engineering</option>
+                                <option value="Enterprise Software Development" {{ old('project_type')=='Enterprise Software Development' ? 'selected' : '' }}>Enterprise Software Development</option>
 
-                                <option>Business Analytics</option>
+                                <option value="Web Application Development" {{ old('project_type')=='Web Application Development' ? 'selected' : '' }}>Web Application Development</option>
 
-                                <option>DevOps & Automation</option>
+                                <option value="Mobile App Development" {{ old('project_type')=='Mobile App Development' ? 'selected' : '' }}>Mobile App Development</option>
 
-                                <option>Technology Consulting</option>
+                                <option value="Cloud Engineering & Migration" {{ old('project_type')=='Cloud Engineering & Migration' ? 'selected' : '' }}>Cloud Engineering & Migration</option>
 
-                                <option>Enterprise Applications</option>
+                                <option value="Data Engineering & Analytics" {{ old('project_type')=='Data Engineering & Analytics' ? 'selected' : '' }}>Data Engineering & Analytics</option>
 
-                                <option>Other</option>
+                                <option value="DevOps & Platform Engineering" {{ old('project_type')=='DevOps & Platform Engineering' ? 'selected' : '' }}>DevOps & Platform Engineering</option>
+
+                                <option value="Technology Consulting" {{ old('project_type')=='Technology Consulting' ? 'selected' : '' }}>Technology Consulting</option>
+
+                                <option value="Digital Transformation" {{ old('project_type')=='Digital Transformation' ? 'selected' : '' }}>Digital Transformation</option>
+
+                                <option value="Corporate Training & Workshops" {{ old('project_type')=='Corporate Training & Workshops' ? 'selected' : '' }}>Corporate Training & Workshops</option>
+
+                                <option value="Managed Support & Maintenance" {{ old('project_type')=='Managed Support & Maintenance' ? 'selected' : '' }}>Managed Support & Maintenance</option>
+
+                                <option value="Other" {{ old('project_type')=='Other' ? 'selected' : '' }}>Other</option>
+
                             </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <textarea
+                                name="message"
+                                rows="5"
+                                class="form-control @error('message','inquiry') is-invalid @enderror"
+                                placeholder="Briefly describe your project requirements, business objectives, expected timeline, technologies involved, or any specific expectations."
+                                required>{{ old('message') }}</textarea>
+
                         </div>
 
                         {{-- CAPTCHA --}}
                         <div class="mb-3">
+
                             <label class="fw-semibold d-flex align-items-center justify-content-between">
 
                                 <span>
+
                                     Solve:
+
                                     <span id="captcha-inquiry-text">
+
                                         {{ session('captcha_inquiry_question') ?? 'Loading...' }}
+
                                     </span>
+
                                 </span>
 
-                                <a href="javascript:void(0)" onclick="refreshCaptcha('inquiry')"
-                                    class="ms-2 text-decoration-none">
+                                <a href="javascript:void(0)"
+                                onclick="refreshCaptcha('inquiry')"
+                                class="ms-2 text-decoration-none">
+
                                     🔄
+
                                 </a>
 
                             </label>
 
-                            <input type="text" name="captcha"
-                                class="form-control @error('captcha', 'contact') is-invalid @enderror"
-                                placeholder="Enter answer" required>
+                            <input
+                                type="text"
+                                name="captcha"
+                                class="form-control @error('captcha','inquiry') is-invalid @enderror"
+                                placeholder="Enter answer"
+                                required>
+
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">
-                            Request Consultation
+
+                            <i class="bi bi-send me-2"></i>
+
+                            Submit Inquiry
+
                         </button>
                     </form>
                 </div>

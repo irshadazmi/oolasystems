@@ -38,7 +38,7 @@
 
             <button
                 type="submit"
-                class="btn btn-outline-light">
+                class="btn btn-outline-light btn-lg">
 
                 <i class="bi bi-box-arrow-right"></i>
 
@@ -82,7 +82,7 @@
 
                 <a
                     href="{{ route('admin.contacts.index') }}"
-                    class="btn btn-outline-light btn-sm mt-2">
+                    class="btn btn-outline-light btn-lg justify-content-center">
 
                     View All
 
@@ -118,7 +118,7 @@
 
                 <a
                     href="{{ route('admin.inquiries.index') }}"
-                    class="btn btn-outline-light btn-sm mt-2">
+                    class="btn btn-outline-light btn-lg justify-content-center">
 
                     View All
 
@@ -154,7 +154,7 @@
 
                 <a
                     href="{{ route('admin.visitors.index') }}"
-                    class="btn btn-outline-light btn-sm mt-2">
+                    class="btn btn-outline-light btn-lg justify-content-center">
 
                     View All
 
@@ -190,7 +190,7 @@
 
                 <a
                     href="{{ route('admin.users.index') }}"
-                    class="btn btn-outline-light btn-sm mt-2">
+                    class="btn btn-outline-light btn-lg justify-content-center">
 
                     View All
 

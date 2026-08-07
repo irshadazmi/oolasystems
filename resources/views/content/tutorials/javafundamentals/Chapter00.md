@@ -1,4 +1,4 @@
-# Tutorial: Enterprise Java Programming & Application Development
+# Tutorial: Core Java Programming & Application Development
 
 Welcome to this hands-on tutorial where we will learn modern Java programming by building a real-world application from scratch.
 

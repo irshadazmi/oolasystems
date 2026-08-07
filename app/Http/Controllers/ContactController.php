@@ -104,6 +104,14 @@ class ContactController extends Controller
     }
 
     /**
+     * Show edit form
+     */
+    public function edit(Contact $contact)
+    {
+        return view('admin.contacts.edit', compact('contact'));
+    }
+
+    /**
      * Update contact (e.g. mark as responded)
      */
     public function update(Request $request, Contact $contact)

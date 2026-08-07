@@ -50,11 +50,33 @@
                     <i class="bi bi-cup-hot resource-icon"></i>
 
                     <h5 class="mt-3">
-                        Java & Spring Boot
+                        Java Fundamentals
                     </h5>
 
                     <small class="text-muted">
-                        Enterprise backend development
+                        Core Java Programming & Application Development
+                    </small>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+
+            <a href="{{ route('tutorial.springboot.index') }}" class="text-decoration-none">
+
+                <div class="feature-card text-center h-100">
+
+                    <i class="bi bi-tree resource-icon"></i>
+
+                    <h5 class="mt-3">
+                        Spring Boot
+                    </h5>
+
+                    <small class="text-muted">
+                        Enterprise Backend Development
                     </small>
 
                 </div>
@@ -77,28 +99,6 @@
 
                     <small class="text-muted">
                         Modern Web API & enterprise apps
-                    </small>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        <div class="col-md-6 col-lg-3">
-
-            <a href="{{ route('tutorial.gcpdatamodeling.index') }}" class="text-decoration-none">
-
-                <div class="feature-card text-center h-100">
-
-                    <i class="bi bi-diagram-3 resource-icon"></i>
-
-                    <h5 class="mt-3">
-                        Data Engineering
-                    </h5>
-
-                    <small class="text-muted">
-                        Data modeling & cloud analytics
                     </small>
 
                 </div>
@@ -169,19 +169,19 @@
 
                 <div class="feature-card text-center h-100">
 
-                    <i class="bi bi-diagram-3 resource-icon"></i>
+                    <i class="bi bi-database resource-icon"></i>
 
-                <h5 class="mt-3">
+                    <h5 class="mt-3">
 
-                    GCP Data Modeling
+                        GCP Data Modeling
 
-                </h5>
+                    </h5>
 
-                <small class="text-muted">
+                    <small class="text-muted">
 
-                     GCP BigQuery, Data Warehousing & Analytics
+                        GCP BigQuery, Data Warehousing & Analytics
 
-                </small>
+                    </small>
 
                 </div>
 

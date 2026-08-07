@@ -9,6 +9,7 @@
     --color-surface-2: #1e1e1e;
     /* --color-primary: #ff6347; */
     --color-primary: #35d0ba;
+    /* --color-primary: #0069f8; */
     --color-accent: #ff826e;
     --color-text: #ffffff;
     --color-text-secondary: #bfbfbf;
@@ -509,43 +510,43 @@ p {
    Brand
 ========================================================== */
 
-.oola-navbar__brand{
-    display:flex;
-    align-items:center;
-    gap:1.25rem;
-    text-decoration:none;
+.oola-navbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    text-decoration: none;
 }
 
-.oola-navbar__logo{
-    height:64px;
-    width:auto;
-    flex-shrink:0;
+.oola-navbar__logo {
+    height: 64px;
+    width: auto;
+    flex-shrink: 0;
 }
 
 /* ==========================================================
    Divider
 ========================================================== */
 
-.oola-navbar__divider{
-    width:1px;
-    height:58px;
-    background:rgba(255,255,255,.28);
-    flex-shrink:0;
+.oola-navbar__divider {
+    width: 1px;
+    height: 58px;
+    background: rgba(255, 255, 255, 0.28);
+    flex-shrink: 0;
 }
 
 /* ==========================================================
    Tagline
 ========================================================== */
 
-.oola-navbar__tagline{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    line-height:1.15;
-    white-space:nowrap;
+.oola-navbar__tagline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.15;
+    white-space: nowrap;
 }
 
-.oola-navbar__tagline .line-1{
+.oola-navbar__tagline .line-1 {
     font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -553,22 +554,21 @@ p {
 
     background: linear-gradient(
         180deg,
-        #FFFFFF 0%,
-        #F5F9FF 35%,
-        #CFE7FF 70%,
-        #7EBBFF 100%
+        #ffffff 0%,
+        #f5f9ff 35%,
+        #cfe7ff 70%,
+        #7ebbff 100%
     );
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 
-    text-shadow:
-        0 0 10px rgba(255,255,255,.18);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.18);
 }
 
-.oola-navbar__tagline .line-2{
-    margin-top: .4rem;
+.oola-navbar__tagline .line-2 {
+    margin-top: 0.4rem;
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -576,11 +576,11 @@ p {
 
     background: linear-gradient(
         90deg,
-        #6FD9FF 0%,
-        #2E8FE8 35%,
-        #FFFFFF 52%,
-        #4FAEFF 70%,
-        #1D63C6 100%
+        #6fd9ff 0%,
+        #2e8fe8 35%,
+        #ffffff 52%,
+        #4faeff 70%,
+        #1d63c6 100%
     );
 
     background-size: 220% auto;
@@ -589,24 +589,21 @@ p {
     -webkit-text-fill-color: transparent;
     background-clip: text;
 
-    text-shadow:
-        0 0 8px rgba(46,143,232,.25);
+    text-shadow: 0 0 8px rgba(46, 143, 232, 0.25);
 }
 
 /* ==========================================================
    Responsive
 ========================================================== */
 
-@media (max-width:1500px){
-
-    .oola-navbar__tagline{
-        display:none;
+@media (max-width: 1500px) {
+    .oola-navbar__tagline {
+        display: none;
     }
 
-    .oola-navbar__divider{
-        display:none;
+    .oola-navbar__divider {
+        display: none;
     }
-
 }
 
 .oola-navbar__links {
@@ -925,7 +922,8 @@ p {
 .oola-card,
 .oola-form-card,
 .portfolio-card {
-    height: 100%;
+    display: flex;
+    flex-direction: column;
     background: var(--color-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-card);
@@ -1152,95 +1150,92 @@ p {
    HERO SECTION
 -------------------------------------------------------------------------- */
 
-.hero-banner{
+.hero-banner {
     position: relative;
-    min-height:610px;      /* Reduced by ~20% */
-    max-width:90%;         /* Reduced width by 5% */
-    margin:0 auto;
-    border-radius:28px;
-    overflow:hidden;
-    background:url("../images/home-hero.png") center center / cover no-repeat;
-    display:flex;
-    align-items:center;
+    min-height: 610px; /* Reduced by ~20% */
+    max-width: 90%; /* Reduced width by 5% */
+    margin: 0 auto;
+    border-radius: 28px;
+    overflow: hidden;
+    background: url("../images/home-hero.png") center center / cover no-repeat;
+    display: flex;
+    align-items: center;
 }
 
-.hero-overlay{
-    position:absolute;
-    inset:0;
-    background:
-        linear-gradient(
-            90deg,
-            rgba(4,10,28,.82) 0%,
-            rgba(6,16,42,.74) 22%,
-            rgba(6,16,42,.28) 48%,
-            rgba(0,0,0,0) 72%
-        );
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(4, 10, 28, 0.82) 0%,
+        rgba(6, 16, 42, 0.74) 22%,
+        rgba(6, 16, 42, 0.28) 48%,
+        rgba(0, 0, 0, 0) 72%
+    );
 }
 
-.hero-content{
-    position:relative;
-    z-index:2;
-    width:48%;
-    padding-left:3.5rem;
-    padding-right:2rem;
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 48%;
+    padding-left: 3.5rem;
+    padding-right: 2rem;
 }
 
-.hero-badge{
-    display:inline-block;
-    margin-bottom:1.5rem;
-    color:var(--color-primary);
-    font-size:.95rem;
-    font-weight:700;
-    letter-spacing:.18em;
-    text-transform:uppercase;
+.hero-badge {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--color-primary);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
 }
 
-.hero-title{
-    margin-bottom:2rem;
-    color:#fff;
+.hero-title {
+    margin-bottom: 2rem;
+    color: #fff;
     font-size: clamp(2.16rem, 3.5vw, 3.6rem);
-    font-weight:800;
-    line-height:1.02;
-    letter-spacing:-.04em;
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
 }
 
-.hero-gradient{
-    background:linear-gradient(
+.hero-gradient {
+    background: linear-gradient(
         180deg,
-        #8ED8FF 0%,
-        #55B8FF 35%,
-        #2E8FE8 70%,
-        #1B62D1 100%
+        #8ed8ff 0%,
+        #55b8ff 35%,
+        #2e8fe8 70%,
+        #1b62d1 100%
     );
 
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 
-    background-clip:text;
+    background-clip: text;
 }
 
-.hero-description{
-    max-width:620px;
-    margin-bottom:2.2rem;
-    color:#D4D9E4;
-    font-size:1.12rem;
-    line-height:1.7;
+.hero-description {
+    max-width: 620px;
+    margin-bottom: 2.2rem;
+    color: #d4d9e4;
+    font-size: 1.12rem;
+    line-height: 1.7;
 }
 
-.page-actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:1.25rem;
+.page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
 }
 
-.page-actions .btn{
+.page-actions .btn {
+    min-width: 205px;
 
-    min-width:205px;
+    padding: 0.85rem 1.8rem;
 
-    padding:.85rem 1.8rem;
-
-    font-size:1rem;
-
+    font-size: 1rem;
 }
 
 /* ==========================================================
@@ -1248,48 +1243,35 @@ p {
 ========================================================== */
 
 @media (max-width: 1199px) {
-
     .hero-banner {
-
         min-height: 520px;
 
         background-position: 72% center;
-
     }
 
     .hero-content {
-
         width: 58%;
 
         padding-left: 2.5rem;
-
     }
 
     .hero-title {
-
         font-size: clamp(2.4rem, 4vw, 3.6rem);
-
     }
 
     .hero-description {
-
         font-size: 1rem;
 
         max-width: 520px;
-
     }
-
 }
-
 
 /* ==========================================================
    Hero - Mobile
 ========================================================== */
 
 @media (max-width: 991px) {
-
     .hero-banner {
-
         min-height: auto;
 
         padding: 3rem 1.5rem;
@@ -1299,54 +1281,44 @@ p {
         align-items: flex-start;
 
         background-position: 78% center;
-
     }
 
-    .hero-overlay{
-
+    .hero-overlay {
         background: linear-gradient(
             180deg,
-            rgba(3,8,24,.90) 0%,
-            rgba(4,10,28,.82) 40%,
-            rgba(5,12,34,.55) 100%
+            rgba(3, 8, 24, 0.9) 0%,
+            rgba(4, 10, 28, 0.82) 40%,
+            rgba(5, 12, 34, 0.55) 100%
         );
-
     }
 
     .hero-content {
-
         width: 100%;
 
         padding: 0;
 
         text-align: center;
-
     }
 
     .hero-badge {
-
         display: block;
 
         margin-bottom: 1rem;
 
-        font-size: .82rem;
+        font-size: 0.82rem;
 
-        letter-spacing: .15em;
-
+        letter-spacing: 0.15em;
     }
 
     .hero-title {
-
         font-size: clamp(2.1rem, 9vw, 3rem);
 
         line-height: 1.08;
 
         margin-bottom: 1.3rem;
-
     }
 
     .hero-description {
-
         margin: 0 auto 2rem;
 
         max-width: 100%;
@@ -1354,11 +1326,9 @@ p {
         font-size: 1rem;
 
         line-height: 1.75;
-
     }
 
     .page-actions {
-
         justify-content: center;
 
         flex-direction: column;
@@ -1366,29 +1336,22 @@ p {
         align-items: center;
 
         gap: 1rem;
-
     }
 
     .page-actions .btn {
-
         width: 100%;
 
         max-width: 320px;
-
     }
-
 }
-
 
 /* ==========================================================
    Hero - Small Mobile
 ========================================================== */
 
 @media (max-width: 576px) {
-
     .hero-banner {
-
-        margin: 0 .5rem;
+        margin: 0 0.5rem;
 
         padding: 2.5rem 1.25rem;
 
@@ -1397,35 +1360,25 @@ p {
         background-position: 72% bottom;
 
         background-size: cover;
-
     }
 
     .hero-title {
-
         font-size: 2.4rem;
-
     }
 
     .hero-gradient {
-
         display: block;
 
-        margin-top: .35rem;
-
+        margin-top: 0.35rem;
     }
 
     .hero-description {
-
-        font-size: .95rem;
-
+        font-size: 0.95rem;
     }
 
     .hero-badge {
-
-        font-size: .78rem;
-
+        font-size: 0.78rem;
     }
-
 }
 
 .stat-bar {
@@ -2127,114 +2080,92 @@ hr {
     transform: scale(1.15);
 }
 
-.manage-header{
+.manage-header {
+    display: flex;
 
-    display:flex;
+    justify-content: space-between;
 
-    justify-content:space-between;
+    align-items: center;
 
-    align-items:center;
+    margin-bottom: 2rem;
 
-    margin-bottom:2rem;
+    gap: 2rem;
 
-    gap:2rem;
-
-    flex-wrap:wrap;
-
+    flex-wrap: wrap;
 }
 
-.manage-toolbar{
+.manage-toolbar {
+    display: flex;
 
-    display:flex;
+    gap: 1rem;
 
-    gap:1rem;
+    margin-bottom: 2rem;
 
-    margin-bottom:2rem;
-
-    flex-wrap:wrap;
-
+    flex-wrap: wrap;
 }
 
-.manage-toolbar input{
+.manage-toolbar input {
+    flex: 1;
 
-    flex:1;
-
-    min-width:280px;
-
+    min-width: 280px;
 }
 
-.manage-table{
+.manage-table {
+    width: 100%;
 
-    width:100%;
-
-    border-collapse:collapse;
-
+    border-collapse: collapse;
 }
 
-.manage-table th{
-
-    font-weight:700;
-
+.manage-table th {
+    font-weight: 700;
 }
 
 .manage-table td,
-.manage-table th{
-
-    padding:1rem;
-
+.manage-table th {
+    padding: 1rem;
 }
 
-.status-badge{
+.status-badge {
+    display: inline-block;
 
-    display:inline-block;
+    padding: 0.35rem 0.75rem;
 
-    padding:.35rem .75rem;
+    border-radius: 999px;
 
-    border-radius:999px;
+    font-size: 0.8rem;
 
-    font-size:.8rem;
-
-    font-weight:600;
-
+    font-weight: 600;
 }
 
-.status-new{
+.status-new {
+    background: #eaf4ff;
 
-    background:#EAF4FF;
-
-    color:#0D6EFD;
-
+    color: #0d6efd;
 }
 
-.status-read{
+.status-read {
+    background: #fff6dd;
 
-    background:#FFF6DD;
-
-    color:#C58B00;
-
+    color: #c58b00;
 }
 
-.status-closed{
+.status-closed {
+    background: #eaf9f0;
 
-    background:#EAF9F0;
-
-    color:#198754;
-
+    color: #198754;
 }
 
-.table-actions{
+.table-actions {
+    display: flex;
 
-    display:flex;
-
-    gap:.5rem;
-
+    gap: 0.5rem;
 }
 
 /* ==========================================================
    Authentication
 ========================================================== */
 
-.auth-page{
-    padding-top:1.5rem;
-    padding-bottom:1.5rem;
+.auth-page {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }

@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inquiries', function (Blueprint $table) {
+        Schema::create('visitors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('project_type'); // dropdown
-            $table->text('message')->nullable(); // optional later use
-            $table->text('response')->nullable();
-            $table->string('status')->default('New'); // CRM ready
+            $table->string('ip');
+            $table->text('user_agent');
+            $table->string('page');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inquiries');
+        Schema::dropIfExists('visitors');
     }
 };

@@ -2,63 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 
 class VisitorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Visitor Analytics
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Visitor::query();
+
+        if ($request->filled('search')) {
+
+            $search = trim($request->search);
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('ip', 'like', "%{$search}%")
+                  ->orWhere('page', 'like', "%{$search}%")
+                  ->orWhere('user_agent', 'like', "%{$search}%");
+
+            });
+
+        }
+
+        $visitors = $query
+            ->latest()
+            ->paginate(20)
+            ->withQueryString();
+
+        $totalVisitors = Visitor::count();
+
+        $uniqueVisitors = Visitor::distinct('ip')->count('ip');
+
+        $todayVisitors = Visitor::whereDate('created_at', today())->count();
+
+        $totalPages = Visitor::distinct('page')->count('page');
+
+        return view('admin.visitors.index', compact(
+            'visitors',
+            'totalVisitors',
+            'uniqueVisitors',
+            'todayVisitors',
+            'totalPages'
+        ));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display visitor details
      */
-    public function create()
+    public function show(Visitor $visitor)
     {
-        //
+        return view('admin.visitors.show', compact('visitor'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Delete visitor record (optional)
      */
-    public function store(Request $request)
+    public function destroy(Visitor $visitor)
     {
-        //
+        $visitor->delete();
+
+        return redirect()
+            ->route('admin.visitors.index')
+            ->with('success', 'Visitor record deleted successfully.');
     }
 
     /**
-     * Display the specified resource.
+     * Delete old visitor logs
      */
-    public function show(string $id)
+    public function clearOld(Request $request)
     {
-        //
-    }
+        $days = (int) $request->input('days', 90);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        Visitor::where('created_at', '<', now()->subDays($days))->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()
+            ->route('admin.visitors.index')
+            ->with('success', "Visitor records older than {$days} days were deleted successfully.");
     }
 }

@@ -32,7 +32,7 @@
 
             <div>
 
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-light">
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-light btn-lg">
 
                     <i class="bi bi-arrow-left"></i>
                     Dashboard
@@ -377,10 +377,11 @@
 
                                         </a>
 
-                                        <a href="#" class="btn btn-sm btn-outline-warning" title="Edit">
+                                        <a href="{{ route('admin.contacts.edit', $contact) }}"
+                                            class="btn btn-sm btn-outline-warning"
+                                            title="Edit">
 
-                                            <i class="bi bi-pencil"></i>
-
+                                                <i class="bi bi-pencil"></i>
                                         </a>
 
                                         <form method="POST" action="{{ route('admin.contacts.destroy', $contact) }}"
