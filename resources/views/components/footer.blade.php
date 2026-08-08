@@ -78,25 +78,20 @@
                     <li class="mb-2"><a href="{{ route('industries') }}#manufacturing">Manufacturing</a></li>
                     <li class="mb-2"><a href="{{ route('industries') }}#education">Education</a></li>
                     <li class="mb-2"><a href="{{ route('industries') }}#logistics">Logistics</a></li>
-                    <li class="mb-2"><a href="{{ route('industries') }}#enterprise-operation">Enterprise
-                            Operations</a></li>
+                    <li class="mb-2"><a href="{{ route('industries') }}#human-resources">Human Resources</a></li>
                 </ul>
             </div>
 
             <div class="col-12 col-sm-6 col-lg-2">
                 <h6 class="footer-heading">Success Stories</h6>
                 <ul class="list-unstyled mt-3" role="list">
-                    <li class="mb-2"><a href="{{ route('portfolio') }}#healthcare">Healthcare Solutions</a></li>
-                    <li class="mb-2"><a href="{{ route('portfolio') }}#banking">Banking &amp; Financial Services</a>
+                    <li class="mb-2"><a href="{{ route('portfolio') }}#dental">Digital Dental Solutions</a></li>
+                    <li class="mb-2"><a href="{{ route('portfolio') }}#crm">CRM Platform</a>
                     </li>
-                    <li class="mb-2"><a href="{{ route('portfolio') }}#insurance">Insurance</a></li>
-                    <li class="mb-2"><a href="{{ route('portfolio') }}#retail">Retail &amp; E-Commerce</a></li>
-                    <li class="mb-2"><a href="{{ route('portfolio') }}#manufacturing">Manufacturing</a></li>
-                    <li class="mb-2"><a href="{{ route('portfolio') }}#education">Education</a></li>
-                    <li class="mb-2"><a href="{{ route('portfolio') }}#logistics">Logistics &amp; Transportation</a>
-                    </li>
-                    <li class="mb-2"><a href="{{ route('portfolio') }}#human-resources">HR &amp; Enterprise
-                            Operations</a></li>
+                    <li class="mb-2"><a href="{{ route('portfolio') }}#payroll">Payroll & HR</a></li>
+                    <li class="mb-2"><a href="{{ route('portfolio') }}#ai-applications">AI Based Apps</a></li>
+                    <li class="mb-2"><a href="{{ route('portfolio') }}#saas">Custom SaaS</a></li>
+                    <li class="mb-2"><a href="{{ route('portfolio') }}#ai-integration">AI Integration</a></li>
                 </ul>
             </div>
 

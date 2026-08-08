@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
+use App\Models\LeadInquiry;
+use App\Services\AILeadService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class InquiryController extends Controller
@@ -111,5 +114,54 @@ class InquiryController extends Controller
         return redirect()
             ->route('admin.inquiries.index')
             ->with('success', 'Inquiry deleted successfully!');
+    }
+
+    /**
+     * Submit a new inquiry from the public website.
+     */
+    public function submit(Request $request)
+    {
+        $validated = $request->validateWithBag('inquiry', [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'project_type' => ['required', 'string', 'max:255'],
+            'message' => ['required', 'string'],
+            'captcha' => ['required'],
+        ]);
+
+        // Existing inquiry
+        $inquiry = Inquiry::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'project_type' => $validated['project_type'],
+            'message' => $validated['message'],
+            'status' => 'new',
+        ]);
+
+        // Create AI lead inquiry
+        $leadInquiry = LeadInquiry::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'project_type' => $validated['project_type'],
+            'message' => $validated['message'],
+            'status' => 'new',
+        ]);
+
+        // AI analysis must never prevent inquiry submission
+        try {
+
+            app(AILeadService::class)->analyze($leadInquiry);
+
+        } catch (\Throwable $e) {
+
+            Log::error('AI lead analysis failed.', [
+                'lead_inquiry_id' => $leadInquiry->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return redirect()
+            ->back()
+            ->with('inquiry_success', 'Thank you for your inquiry. Our team will get back to you shortly.');
     }
 }

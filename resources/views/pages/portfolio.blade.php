@@ -41,7 +41,7 @@
                     </h2>
 
                     <p class="text-primary fw-semibold mb-3">
-                        Healthcare & Life Sciences
+                        Digital Dental Solutions
                     </p>
 
                     <div class="mt-3">
