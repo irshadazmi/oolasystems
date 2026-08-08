@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\TutorialController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CareerController;
 use App\Http\Controllers\VisitorController;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -17,6 +18,10 @@ Route::get('/industries', [PageController::class, 'industries'])->name('industri
 Route::get('/portfolio', [PageController::class, 'portfolio'])->name('portfolio');
 Route::get('/resources', [PageController::class, 'resources'])->name('resources');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/terms', [PageController::class, 'terms'])->name('terms');
+Route::get('/sitemap', [PageController::class, 'sitemap'])->name('sitemap');
+Route::get('/careers', [PageController::class, 'careers'])->name('careers');
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.submit');
@@ -24,6 +29,7 @@ Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.subm
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+Route::get('/careers', [CareerController::class, 'publicIndex'])->name('careers');
 
 // Admin Routes (Protected by auth middleware)
 Route::middleware('auth')
@@ -46,6 +52,15 @@ Route::middleware('auth')
         Route::get('/inquiries/{inquiry}/edit', [InquiryController::class, 'edit'])->name('inquiries.edit');
         Route::patch('/inquiries/{inquiry}', [InquiryController::class, 'update'])->name('inquiries.update');
         Route::delete('/inquiries/{inquiry}', [InquiryController::class, 'destroy'])->name('inquiries.destroy');
+
+        // Careers
+        Route::get('/careers', [CareerController::class, 'index'])->name('careers.index');
+        Route::get('/careers/create', [CareerController::class, 'create'])->name('careers.create');
+        Route::post('/careers', [CareerController::class, 'store'])->name('careers.store');
+        Route::get('/careers/{career}', [CareerController::class, 'show'])->name('careers.show');
+        Route::get('/careers/{career}/edit', [CareerController::class, 'edit'])->name('careers.edit');
+        Route::patch('/careers/{career}', [CareerController::class, 'update'])->name('careers.update');
+        Route::delete('/careers/{career}', [CareerController::class, 'destroy'])->name('careers.destroy');
 
         // Users
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -137,6 +152,19 @@ Route::get('/dev/run-migrate', function () {
 
     Artisan::call('migrate', ['--force' => true]);
     return 'Migration completed';
+});
+
+Route::get('/dev/run-migrate-careers', function () {
+
+    abort_unless(request('key') === 'oola@123', 403);
+
+    Artisan::call('migrate', [
+        '--path' => 'database/migrations/2026_08_08_103219_create_careers_table.php',
+        '--force' => true,
+    ]);
+
+    return 'Careers migration completed';
+
 });
 
 Route::get('/dev/clear-cache', function () {

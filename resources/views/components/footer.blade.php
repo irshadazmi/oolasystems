@@ -208,13 +208,13 @@
                 </p>
                 <div class="d-flex flex-wrap justify-content-center gap-4 small">
 
-                    <a href="#">Privacy Policy</a>
+                    <a href="{{ route('privacy') }}">Privacy Policy</a>
 
-                    <a href="#">Terms of Use</a>
+                    <a href="{{ route('terms') }}">Terms of Use</a>
 
-                    <a href="#">Sitemap</a>
+                    <a href="{{ route('sitemap') }}">Sitemap</a>
 
-                    <a href="#">Careers</a>
+                    <a href="{{ route('careers') }}">Careers</a>
 
                 </div>
             </div>

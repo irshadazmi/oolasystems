@@ -43,7 +43,7 @@
 
         <div class="col-md-6 col-lg-3">
 
-            <a href="{{ route('tutorial.springboot.index') }}" class="text-decoration-none">
+            <a href="{{ route('tutorial.javafundamentals.index') }}" class="text-decoration-none">
 
                 <div class="feature-card text-center h-100">
 

@@ -54,7 +54,7 @@
     {{-- Statistics --}}
     {{-- ====================================================== --}}
 
-    <div class="row g-4 mb-5">
+    <div class="row g-1 mb-5">
 
         <div class="col-lg-3 col-md-6">
 
@@ -76,12 +76,120 @@
 
                 <p class="text-secondary">
 
-                    Customer enquiries
+                    Customer Enquiries
 
                 </p>
 
                 <a
                     href="{{ route('admin.contacts.index') }}"
+                    class="btn btn-outline-light btn-lg justify-content-center">
+
+                    View All
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+
+            <div class="feature-card text-center h-100">
+
+                <i class="bi bi-people fs-1 text-success"></i>
+
+                <h2 class="mt-3">
+
+                    {{ $careersCount }}
+
+                </h2>
+
+                <h5>
+
+                    Careers
+
+                </h5>
+
+                <p class="text-secondary">
+
+                    Job Opportunities
+
+                </p>
+
+                <a
+                    href="{{ route('admin.careers.index') }}"
+                    class="btn btn-outline-light btn-lg justify-content-center">
+
+                    View All
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+
+            <div class="feature-card text-center h-100">
+
+                <i class="bi bi-people fs-1 text-success"></i>
+
+                <h2 class="mt-3">
+
+                    {{ $visitorsCount }}
+
+                </h2>
+
+                <h5>
+
+                    Visitors
+
+                </h5>
+
+                <p class="text-secondary">
+
+                    Website Visitors
+
+                </p>
+
+                <a
+                    href="{{ route('admin.visitors.index') }}"
+                    class="btn btn-outline-light btn-lg justify-content-center">
+
+                    View All
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+
+            <div class="feature-card text-center h-100">
+
+                <i class="bi bi-person-badge fs-1 text-warning"></i>
+
+                <h2 class="mt-3">
+
+                    {{ $usersCount }}
+
+                </h2>
+
+                <h5>
+
+                    Users
+
+                </h5>
+
+                <p class="text-secondary">
+
+                    System Users
+
+                </p>
+
+                <a
+                    href="{{ route('admin.users.index') }}"
                     class="btn btn-outline-light btn-lg justify-content-center">
 
                     View All
@@ -112,84 +220,12 @@
 
                 <p class="text-secondary">
 
-                    Business enquiries
+                    Business Enquiries
 
                 </p>
 
                 <a
                     href="{{ route('admin.inquiries.index') }}"
-                    class="btn btn-outline-light btn-lg justify-content-center">
-
-                    View All
-
-                </a>
-
-            </div>
-
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-
-            <div class="feature-card text-center h-100">
-
-                <i class="bi bi-people fs-1 text-success"></i>
-
-                <h2 class="mt-3">
-
-                    {{ $visitorsCount }}
-
-                </h2>
-
-                <h5>
-
-                    Visitors
-
-                </h5>
-
-                <p class="text-secondary">
-
-                    Website visitors
-
-                </p>
-
-                <a
-                    href="{{ route('admin.visitors.index') }}"
-                    class="btn btn-outline-light btn-lg justify-content-center">
-
-                    View All
-
-                </a>
-
-            </div>
-
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-
-            <div class="feature-card text-center h-100">
-
-                <i class="bi bi-person-badge fs-1 text-warning"></i>
-
-                <h2 class="mt-3">
-
-                    {{ $usersCount }}
-
-                </h2>
-
-                <h5>
-
-                    Users
-
-                </h5>
-
-                <p class="text-secondary">
-
-                    System users
-
-                </p>
-
-                <a
-                    href="{{ route('admin.users.index') }}"
                     class="btn btn-outline-light btn-lg justify-content-center">
 
                     View All
@@ -228,7 +264,7 @@
 
         </div>
 
-        <div class="row g-3">
+        <div class="row g-1">
 
             <div class="col-lg-3 col-md-6">
 
@@ -238,27 +274,27 @@
 
                     <i class="bi bi-envelope-paper"></i>
 
-                    Manage Contacts
+                    Manage Contact
 
                 </a>
 
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-2 col-md-6">
 
                 <a
-                    href="{{ route('admin.inquiries.index') }}"
+                    href="{{ route('admin.careers.index') }}"
                     class="btn btn-primary w-100">
 
-                    <i class="bi bi-briefcase"></i>
+                    <i class="bi bi-people"></i>
 
-                    Manage Inquiries
+                    Manage Career
 
                 </a>
 
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-2 col-md-6">
 
                 <a
                     href="{{ route('admin.visitors.index') }}"
@@ -272,7 +308,7 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-2 col-md-6">
 
                 <a
                     href="{{ route('admin.users.index') }}"
@@ -280,7 +316,21 @@
 
                     <i class="bi bi-person-gear"></i>
 
-                    User Management
+                    Manage User
+
+                </a>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <a
+                    href="{{ route('admin.inquiries.index') }}"
+                    class="btn btn-primary w-100">
+
+                    <i class="bi bi-briefcase"></i>
+
+                    Manage Inquiry
 
                 </a>
 

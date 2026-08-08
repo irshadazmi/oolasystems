@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\Inquiry;
 use App\Models\User;
 use App\Models\Visitor;
+use App\Models\Career;
 
 class PageController extends Controller
 {
@@ -34,6 +35,26 @@ class PageController extends Controller
         return view('pages.industries');
     }
 
+    public function privacy()
+    {
+        return view('pages.privacy');
+    }
+
+    public function terms()
+    {
+        return view('pages.terms');
+    }
+
+    public function sitemap()
+    {
+        return view('pages.sitemap');
+    }
+
+    public function careers()
+    {
+        return view('pages.careers');
+    }
+
     public function tutorial()
     {
         return view('tutorial.index');
@@ -51,6 +72,7 @@ class PageController extends Controller
             'inquiriesCount' => Inquiry::count(),
             'visitorsCount' => Visitor::count(),
             'usersCount' => User::count(),
+            'careersCount' => Career::count(),
         ]);
     }
 }
