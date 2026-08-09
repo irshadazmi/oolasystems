@@ -52,6 +52,11 @@ Route::middleware('auth')
         Route::get('/inquiries/{inquiry}/edit', [InquiryController::class, 'edit'])->name('inquiries.edit');
         Route::patch('/inquiries/{inquiry}', [InquiryController::class, 'update'])->name('inquiries.update');
         Route::delete('/inquiries/{inquiry}', [InquiryController::class, 'destroy'])->name('inquiries.destroy');
+        Route::post('/inquiries/{inquiry}/reanalyze', [InquiryController::class, 'reanalyze'])->name('inquiries.reanalyze');
+        Route::post('/inquiries/{inquiry}/lead-status', [InquiryController::class, 'updateLeadStatus'])->name('inquiries.lead-status');
+        Route::post('/inquiries/{inquiry}/follow-up', [InquiryController::class, 'updateFollowUp'])->name('inquiries.follow-up');
+        Route::post('/inquiries/{inquiry}/mark-contacted', [InquiryController::class, 'markContacted'])->name('inquiries.mark-contacted');
+        Route::post('/inquiries/{leadInquiry}/reanalyze', [InquiryController::class, 'reanalyzeLead'])->name('inquiries.reanalyze');
 
         // Careers
         Route::get('/careers', [CareerController::class, 'index'])->name('careers.index');

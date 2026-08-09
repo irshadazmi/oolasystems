@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class LeadInquiry extends Model
 {
-    protected $table = 'lead_inquiries';
-
     protected $fillable = [
         'name',
         'email',
         'project_type',
         'message',
-        'status' => 'New',
+        'status',
         'response',
+
+        // AI Lead Analysis
         'lead_score',
         'lead_temperature',
         'service_interest',
@@ -23,12 +23,17 @@ class LeadInquiry extends Model
         'ai_summary',
         'ai_recommendation',
         'ai_processed_at',
+
+        // Lead Management
+        'lead_status',
+        'follow_up_date',
+        'last_contacted_at',
+        'follow_up_notes',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'ai_processed_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'follow_up_date' => 'date',
+        'last_contacted_at' => 'datetime',
+        'ai_processed_at' => 'datetime',
+    ];
 }

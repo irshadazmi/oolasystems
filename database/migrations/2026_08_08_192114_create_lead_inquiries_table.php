@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status')->default('new');
             $table->text('response')->nullable();
 
+            // AI Lead Analysis
             $table->unsignedTinyInteger('lead_score')->nullable();
             $table->string('lead_temperature', 20)->nullable();
             $table->string('service_interest')->nullable();
@@ -29,6 +30,12 @@ return new class extends Migration
             $table->text('ai_summary')->nullable();
             $table->text('ai_recommendation')->nullable();
             $table->timestamp('ai_processed_at')->nullable();
+
+            // Lead Management
+            $table->string('lead_status')->default('New');
+            $table->date('follow_up_date')->nullable();
+            $table->timestamp('last_contacted_at')->nullable();
+            $table->text('follow_up_notes')->nullable();
 
             $table->timestamps();
         });
