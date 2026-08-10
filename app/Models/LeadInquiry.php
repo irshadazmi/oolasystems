@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Inquiry extends Model
+class LeadInquiry extends Model
 {
     protected $fillable = [
         'name',
@@ -15,7 +15,6 @@ class Inquiry extends Model
         'response',
 
         // AI Lead Analysis
-        'ai_status',
         'lead_score',
         'lead_temperature',
         'service_interest',

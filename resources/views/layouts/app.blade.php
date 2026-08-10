@@ -23,6 +23,9 @@
         </div>
     </div>
 
+    {{-- Global AI Chatbot --}}
+    @include('components.chatbot.widget')
+
     @include('components.scripts')
 </body>
 
