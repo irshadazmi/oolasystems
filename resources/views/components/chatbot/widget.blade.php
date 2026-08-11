@@ -1,10 +1,13 @@
 {{-- ==========================================================
      AI CHATBOT WIDGET
+     Phase 2G-1
 =========================================================== --}}
 
 <div id="ai-chatbot" class="ai-chatbot">
 
-    {{-- Surprise Greeting --}}
+    {{-- ======================================================
+         SURPRISE GREETING
+    ======================================================= --}}
     <div
         id="ai-chatbot-greeting"
         class="ai-chatbot-greeting">
@@ -18,7 +21,9 @@
     </div>
 
 
-    {{-- Floating Button --}}
+    {{-- ======================================================
+         FLOATING BUTTON
+    ======================================================= --}}
     <button
         type="button"
         id="ai-chatbot-toggle"
@@ -31,13 +36,18 @@
     </button>
 
 
-    {{-- Chat Panel --}}
+    {{-- ======================================================
+         CHAT PANEL
+    ======================================================= --}}
     <div
         id="ai-chatbot-panel"
         class="ai-chatbot-panel"
         aria-hidden="true">
 
-        {{-- Header --}}
+
+        {{-- ==================================================
+             HEADER
+        =================================================== --}}
         <div class="ai-chatbot-header">
 
             <div class="d-flex align-items-center gap-2">
@@ -74,7 +84,9 @@
         </div>
 
 
-        {{-- Messages --}}
+        {{-- ==================================================
+             CHAT MESSAGES
+        =================================================== --}}
         <div
             id="ai-chatbot-messages"
             class="ai-chatbot-messages">
@@ -91,8 +103,8 @@
 
                     <br>
 
-                    Are you looking for help with a project, service,
-                    or would you like to make an inquiry?
+                    Are you looking for help with a project,
+                    service, or would you like to make an inquiry?
 
                 </div>
 
@@ -101,7 +113,38 @@
         </div>
 
 
-        {{-- Input --}}
+        {{-- ==================================================
+             CHATBOT INQUIRY FORM TEMPLATE
+             --------------------------------------------------
+             IMPORTANT:
+             The form is kept inside <template> so its
+             form-field IDs do not exist in the DOM until
+             the visitor actually reaches the inquiry stage.
+        =================================================== --}}
+
+        <template id="ai-chatbot-inquiry-template">
+
+            @include('components.forms.inquiry-form', [
+                'mode' => 'chatbot',
+                'showHeading' => false,
+            ])
+
+        </template>
+
+
+        {{-- ==================================================
+             CHATBOT INQUIRY FORM CONTAINER
+        =================================================== --}}
+        <div
+            id="ai-chatbot-inquiry-form"
+            class="ai-chatbot-inquiry-form d-none">
+
+        </div>
+
+
+        {{-- ==================================================
+             CHAT INPUT
+        =================================================== --}}
         <div class="ai-chatbot-input-area">
 
             <input

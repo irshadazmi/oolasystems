@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Inquiry;
-use App\Services\AI\AIProviderFactory;
+use App\Providers\AI\AIProviderFactory;
 use Illuminate\Support\Facades\Log;
 use RuntimeException;
 
