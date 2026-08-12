@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Exceptions\AI\AINonRetryableException;
+use App\Exceptions\AI\AIRetryableException;
 use App\Models\Inquiry;
 use App\Services\AILeadService;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,7 +21,10 @@ class AnalyzeInquiryJob implements ShouldQueue
     public int $tries = 3;
 
     /**
-     * Seconds before retrying.
+     * Default backoff.
+     *
+     * Specific AI retry delays are handled by
+     * AIRetryableException.
      */
     public int $backoff = 30;
 
@@ -34,14 +39,20 @@ class AnalyzeInquiryJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(AILeadService $aiLeadService): void
-    {
+    public function handle(
+        AILeadService $aiLeadService
+    ): void {
+
         $inquiry = Inquiry::find($this->inquiryId);
 
         if (!$inquiry) {
-            Log::warning('AI analysis skipped: inquiry not found.', [
-                'inquiry_id' => $this->inquiryId,
-            ]);
+
+            Log::warning(
+                'AI analysis skipped: inquiry not found.',
+                [
+                    'inquiry_id' => $this->inquiryId,
+                ]
+            );
 
             return;
         }
@@ -50,43 +61,118 @@ class AnalyzeInquiryJob implements ShouldQueue
             'ai_status' => 'Processing',
         ]);
 
-        Log::info('AI lead analysis started.', [
-            'inquiry_id' => $inquiry->id,
-            'attempt' => $this->attempts(),
-        ]);
+        Log::info(
+            'AI lead analysis started.',
+            [
+                'inquiry_id' => $inquiry->id,
+                'attempt' => $this->attempts(),
+            ]
+        );
+
+        try {
+
+            $aiLeadService->analyze($inquiry);
+
+        } catch (AINonRetryableException $exception) {
+
+            /*
+             * Configuration / permanent API errors should
+             * not consume additional queue attempts.
+             */
+            $inquiry->update([
+                'ai_status' => 'Failed',
+            ]);
+
+            Log::error(
+                'AI lead analysis failed permanently.',
+                [
+                    'inquiry_id' => $inquiry->id,
+                    'attempt' => $this->attempts(),
+                    'error' => $exception->getMessage(),
+                ]
+            );
+
+            /*
+             * Mark the queue job as failed immediately.
+             * Laravel will invoke failed().
+             */
+            $this->fail($exception);
+
+            return;
+
+        } catch (AIRetryableException $exception) {
+
+            /*
+             * Temporary Gemini/network problem.
+             *
+             * Release the job back to the queue instead
+             * of throwing immediately.
+             */
+            $delay = max(
+                1,
+                $exception->retryAfter
+            );
+
+            Log::warning(
+                'AI lead analysis temporarily unavailable. ' .
+                'Job will be retried.',
+                [
+                    'inquiry_id' => $inquiry->id,
+                    'attempt' => $this->attempts(),
+                    'retry_after' => $delay,
+                    'error' => $exception->getMessage(),
+                ]
+            );
+
+            $inquiry->update([
+                'ai_status' => 'Processing',
+            ]);
+
+            $this->release($delay);
+
+            return;
+        }
 
         /*
-         * Let exceptions bubble up to Laravel's queue system.
-         * Laravel will automatically retry the job.
+         * AI analysis succeeded.
+         *
+         * AILeadService has already persisted the actual
+         * analysis fields and ai_processed_at.
          */
-        $aiLeadService->analyze($inquiry);
-
         $inquiry->update([
             'ai_status' => 'Completed',
         ]);
 
-        Log::info('AI lead analysis completed.', [
-            'inquiry_id' => $inquiry->id,
-        ]);
+        Log::info(
+            'AI lead analysis completed.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
     }
 
     /**
-     * Handle a job that has permanently failed
-     * after all retry attempts.
+     * Handle a job that has permanently failed.
      */
-    public function failed(Throwable $exception): void
-    {
+    public function failed(
+        Throwable $exception
+    ): void {
+
         $inquiry = Inquiry::find($this->inquiryId);
 
         if ($inquiry) {
+
             $inquiry->update([
                 'ai_status' => 'Failed',
             ]);
         }
 
-        Log::error('AI lead analysis permanently failed.', [
-            'inquiry_id' => $this->inquiryId,
-            'error' => $exception->getMessage(),
-        ]);
+        Log::error(
+            'AI lead analysis permanently failed.',
+            [
+                'inquiry_id' => $this->inquiryId,
+                'error' => $exception->getMessage(),
+            ]
+        );
     }
 }
