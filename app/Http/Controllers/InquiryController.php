@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\AnalyzeInquiryJob;
 use App\Models\Inquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InquiryController extends Controller
 {
@@ -108,8 +109,8 @@ class InquiryController extends Controller
         | Sorting
         |--------------------------------------------------------------------------
         |
-        | The view uses "priority", so keep the controller consistent
-        | with that parameter.
+        | The view uses "priority", so keep the controller
+        | consistent with that parameter.
         |
         */
 
@@ -189,6 +190,12 @@ class InquiryController extends Controller
             'inquiry'
         );
 
+        /*
+        |--------------------------------------------------------------------------
+        | CAPTCHA Validation
+        |--------------------------------------------------------------------------
+        */
+
         if (
             (int) $request->captcha !==
             (int) session('captcha_inquiry_answer')
@@ -208,6 +215,12 @@ class InquiryController extends Controller
             'captcha_inquiry_question',
         ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Create Inquiry
+        |--------------------------------------------------------------------------
+        */
+
         $inquiry = Inquiry::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -224,7 +237,27 @@ class InquiryController extends Controller
             'ai_status' => 'Pending',
         ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Queue AI Lead Analysis
+        |--------------------------------------------------------------------------
+        */
+
+        Log::info(
+            'Inquiry created. Dispatching AI analysis job.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
+
         AnalyzeInquiryJob::dispatch($inquiry->id);
+
+        Log::info(
+            'AI analysis job dispatched.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
 
         return back()->with(
             'inquiry_success',
@@ -340,7 +373,21 @@ class InquiryController extends Controller
             'ai_status' => 'Pending',
         ]);
 
+        Log::info(
+            'Re-analysis requested. Dispatching AI analysis job.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
+
         AnalyzeInquiryJob::dispatch($inquiry->id);
+
+        Log::info(
+            'AI re-analysis job dispatched.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
 
         return back()->with(
             'success',
