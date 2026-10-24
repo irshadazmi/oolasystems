@@ -54,24 +54,40 @@
 
 
         <div class="d-flex gap-2 flex-wrap">
+            @php
+                $aiStatus = $inquiry->ai_status ?? 'Pending';
+                $leadStatus = $inquiry->lead_status ?? 'New';
+
+                $aiReanalysisAllowed =
+                    in_array($aiStatus, ['Completed', 'Failed'], true)
+                    && ! in_array($leadStatus, ['Converted', 'Lost'], true);
+            @endphp
 
             {{-- Re-analyze with AI --}}
-
-            <form class="d-flex justify-content-end" method="POST"
+            <form
+                class="d-flex justify-content-end"
+                method="POST"
                 action="{{ route('admin.inquiries.reanalyze', $inquiry) }}"
-                onsubmit="return confirm('Re-analyze this inquiry using AI?')">
-
+                onsubmit="return confirm('Re-analyze this inquiry using AI?')"
+            >
                 @csrf
 
                 <button
                     type="submit"
-                    class="btn btn-outline-primary">
-
+                    class="btn btn-outline-primary {{ ! $aiReanalysisAllowed ? 'disabled' : '' }}"
+                    @disabled(! $aiReanalysisAllowed)
+                    title="{{ ! $aiReanalysisAllowed
+                        ? (
+                            in_array($leadStatus, ['Converted', 'Lost'], true)
+                                ? 'AI re-analysis is disabled for closed leads.'
+                                : 'AI analysis is already pending or processing.'
+                        )
+                        : 'Re-analyze this inquiry using AI'
+                    }}"
+                >
                     <i class="bi bi-stars me-2"></i>
                     Re-analyze with AI
-
                 </button>
-
             </form>
 
 
@@ -350,25 +366,33 @@
 
             <div>
 
-                @if($inquiry->ai_processed_at)
+                @php
+                    $aiStatus = $inquiry->ai_status ?? 'Pending';
 
-                    <span class="badge bg-success px-3 py-2">
+                    $aiStatusClass = match ($aiStatus) {
+                        'Completed' => 'bg-success',
+                        'Processing' => 'bg-info',
+                        'Failed' => 'bg-danger',
+                        'Pending' => 'bg-warning text-dark',
+                        default => 'bg-secondary',
+                    };
 
-                        <i class="bi bi-check-circle me-1"></i>
-                        AI Analyzed
+                    $aiStatusIcon = match ($aiStatus) {
+                        'Completed' => 'bi-check-circle',
+                        'Processing' => 'bi-arrow-repeat',
+                        'Failed' => 'bi-exclamation-triangle',
+                        'Pending' => 'bi-clock',
+                        default => 'bi-question-circle',
+                    };
+                @endphp
 
-                    </span>
+                <span class="badge {{ $aiStatusClass }} px-3 py-2">
 
-                @else
+                    <i class="bi {{ $aiStatusIcon }} me-1"></i>
 
-                    <span class="badge bg-warning text-dark px-3 py-2">
+                    AI {{ $aiStatus }}
 
-                        <i class="bi bi-clock me-1"></i>
-                        Analysis Pending
-
-                    </span>
-
-                @endif
+                </span>
 
             </div>
 
@@ -608,20 +632,30 @@
                         AI Processing
                     </div>
 
-
                     <div class="text-center py-2">
 
+                        @php
+                            $aiStatus = $inquiry->ai_status ?? 'Pending';
+
+                            $aiIcon = match ($aiStatus) {
+                                'Completed' => 'bi-check-circle text-success',
+                                'Processing' => 'bi-arrow-repeat text-info',
+                                'Failed' => 'bi-exclamation-triangle text-danger',
+                                'Pending' => 'bi-clock text-warning',
+                                default => 'bi-question-circle text-secondary',
+                            };
+                        @endphp
+
                         <i
-                            class="bi bi-robot text-info"
-                            style="font-size:3rem;">
-                        </i>
+                            class="bi {{ $aiIcon }}"
+                            style="font-size:3rem;"
+                        ></i>
 
+                        <h4 class="mt-3 mb-1">
+                            {{ $aiStatus }}
+                        </h4>
 
-                        @if($inquiry->ai_processed_at)
-
-                            <h4 class="mt-3 mb-1">
-                                Completed
-                            </h4>
+                        @if($aiStatus === 'Completed' && $inquiry->ai_processed_at)
 
                             <div class="text-secondary small">
 
@@ -633,14 +667,22 @@
 
                             </div>
 
-                        @else
-
-                            <h4 class="mt-3 mb-1">
-                                Pending
-                            </h4>
+                        @elseif($aiStatus === 'Processing')
 
                             <div class="text-secondary small">
-                                AI analysis has not been completed.
+                                AI analysis is currently being processed.
+                            </div>
+
+                        @elseif($aiStatus === 'Failed')
+
+                            <div class="text-secondary small">
+                                AI analysis failed. Re-analysis is available.
+                            </div>
+
+                        @else
+
+                            <div class="text-secondary small">
+                                AI analysis is waiting to be processed.
                             </div>
 
                         @endif
@@ -866,40 +908,74 @@
                         @csrf
 
 
+                        @php
+
+                            $currentLeadStatus = $inquiry->lead_status ?? 'New';
+
+                            $allowedTransitions = [
+                                'New' => [
+                                    'Contacted',
+                                    'Lost',
+                                ],
+
+                                'Contacted' => [
+                                    'Qualified',
+                                    'Lost',
+                                ],
+
+                                'Qualified' => [
+                                    'Converted',
+                                    'Lost',
+                                ],
+
+                                'Converted' => [],
+
+                                'Lost' => [],
+                            ];
+
+                            $nextStatuses =
+                                $allowedTransitions[$currentLeadStatus] ?? [];
+
+                        @endphp
+
                         <select
                             name="lead_status"
-                            class="form-select mb-3">
+                            class="form-select mb-3"
+                            @disabled(
+                                in_array(
+                                    $currentLeadStatus,
+                                    ['Converted', 'Lost'],
+                                    true
+                                )
+                            )
+                        >
 
-                            @foreach([
-                                'New',
-                                'Contacted',
-                                'Qualified',
-                                'Converted',
-                                'Lost'
-                            ] as $leadStatusOption)
+                            <option value="{{ $currentLeadStatus }}">
+                                {{ $currentLeadStatus }}
+                            </option>
 
-                                <option
-                                    value="{{ $leadStatusOption }}"
-                                    @selected(
-                                        ($inquiry->lead_status ?? 'New')
-                                        === $leadStatusOption
-                                    )>
+                            @foreach($nextStatuses as $nextStatus)
 
-                                    {{ $leadStatusOption }}
-
+                                <option value="{{ $nextStatus }}">
+                                    {{ $nextStatus }}
                                 </option>
 
                             @endforeach
 
                         </select>
 
-
                         <button
                             type="submit"
-                            class="btn btn-primary w-100">
-
+                            class="btn btn-primary w-100"
+                            @disabled(empty($nextStatuses))
+                        >
                             <i class="bi bi-check2-circle me-2"></i>
-                            Update Status
+
+                            @if(empty($nextStatuses))
+                                Lead Closed
+                            @else
+                                Update Status
+                            @endif
 
                         </button>
 
@@ -979,50 +1055,27 @@
                         Contact Activity
                     </div>
 
-
                     @if($inquiry->last_contacted_at)
 
                         <div class="fw-semibold mb-1">
                             Last Contacted
                         </div>
 
-                        <div class="text-secondary mb-4">
-
+                        <div class="text-secondary">
                             {{ $inquiry->last_contacted_at->format('d M Y') }}
 
                             <br>
 
                             {{ $inquiry->last_contacted_at->format('h:i A') }}
-
                         </div>
 
                     @else
 
-                        <div class="text-secondary mb-4">
+                        <div class="text-secondary">
                             This lead has not been contacted yet.
                         </div>
 
                     @endif
-
-
-                    <form
-                        method="POST"
-                        action="{{ route('admin.inquiries.mark-contacted', $inquiry) }}"
-                        onsubmit="return confirm('Mark this lead as contacted?')">
-
-                        @csrf
-
-                        <button
-                            type="submit"
-                            class="btn btn-outline-info w-100">
-
-                            <i class="bi bi-telephone-check me-2"></i>
-
-                            Mark as Contacted
-
-                        </button>
-
-                    </form>
 
                 </div>
 

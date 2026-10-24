@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Jobs\AnalyzeInquiryJob;
 use App\Models\Inquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InquiryController extends Controller
 {
+    /**
+     * Display inquiries.
+     */
     public function index(Request $request)
     {
         $query = Inquiry::query();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Search
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -22,46 +32,119 @@ class InquiryController extends Controller
             });
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Overall Inquiry Status
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Lead Temperature
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('temperature')) {
-            $query->where('lead_temperature', $request->temperature);
+            $query->where(
+                'lead_temperature',
+                $request->temperature
+            );
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Lead Score
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('min_score')) {
-            $query->where('lead_score', '>=', (int) $request->min_score);
+            $query->where(
+                'lead_score',
+                '>=',
+                (int) $request->min_score
+            );
         }
 
         if ($request->filled('max_score')) {
-            $query->where('lead_score', '<=', (int) $request->max_score);
+            $query->where(
+                'lead_score',
+                '<=',
+                (int) $request->max_score
+            );
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | AI Status
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('ai_status')) {
             match ($request->ai_status) {
-                'Analyzed' => $query->where('ai_status', 'Completed'),
-                'Pending' => $query->whereIn('ai_status', ['Pending', 'Processing']),
-                'Failed' => $query->where('ai_status', 'Failed'),
+                'Analyzed' => $query->where(
+                    'ai_status',
+                    'Completed'
+                ),
+
+                'Pending' => $query->whereIn(
+                    'ai_status',
+                    ['Pending', 'Processing']
+                ),
+
+                'Failed' => $query->where(
+                    'ai_status',
+                    'Failed'
+                ),
+
                 default => null,
             };
         }
 
-        match ($request->input('lead_sort', 'latest')) {
-            'highest' => $query
+        /*
+        |--------------------------------------------------------------------------
+        | Sorting
+        |--------------------------------------------------------------------------
+        |
+        | The view uses "priority", so keep the controller
+        | consistent with that parameter.
+        |
+        */
+
+        match ($request->input('priority', 'latest')) {
+            'highest_score' => $query
                 ->orderByDesc('lead_score')
                 ->latest('created_at'),
 
-            'lowest' => $query
-                ->orderBy('lead_score')
+            'hot' => $query
+                ->orderByDesc('lead_temperature')
+                ->orderByDesc('lead_score')
                 ->latest('created_at'),
 
-            default => $query->latest('created_at'),
+            'warm' => $query
+                ->where('lead_temperature', 'WARM')
+                ->orderByDesc('lead_score')
+                ->latest('created_at'),
+
+            'oldest' => $query
+                ->oldest('created_at'),
+
+            default => $query
+                ->latest('created_at'),
         };
 
         $inquiries = $query
             ->paginate(10)
             ->withQueryString();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Lead Statistics
+        |--------------------------------------------------------------------------
+        */
 
         $totalLeads = Inquiry::whereNotNull('lead_score')->count();
 
@@ -89,6 +172,9 @@ class InquiryController extends Controller
         ]);
     }
 
+    /**
+     * Store a new inquiry.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate(
@@ -104,13 +190,21 @@ class InquiryController extends Controller
             'inquiry'
         );
 
+        /*
+        |--------------------------------------------------------------------------
+        | CAPTCHA Validation
+        |--------------------------------------------------------------------------
+        */
+
         if (
             (int) $request->captcha !==
             (int) session('captcha_inquiry_answer')
         ) {
             return back()
                 ->withErrors(
-                    ['captcha' => 'Incorrect captcha answer'],
+                    [
+                        'captcha' => 'Incorrect captcha answer',
+                    ],
                     'inquiry'
                 )
                 ->withInput();
@@ -121,17 +215,49 @@ class InquiryController extends Controller
             'captcha_inquiry_question',
         ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Create Inquiry
+        |--------------------------------------------------------------------------
+        */
+
         $inquiry = Inquiry::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'project_type' => $validated['project_type'],
             'message' => $validated['message'],
+
+            // Overall inquiry state
             'status' => 'New',
+
+            // Sales lifecycle
             'lead_status' => 'New',
+
+            // AI processing state
             'ai_status' => 'Pending',
         ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Queue AI Lead Analysis
+        |--------------------------------------------------------------------------
+        */
+
+        Log::info(
+            'Inquiry created. Dispatching AI analysis job.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
+
         AnalyzeInquiryJob::dispatch($inquiry->id);
+
+        Log::info(
+            'AI analysis job dispatched.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
 
         return back()->with(
             'inquiry_success',
@@ -139,6 +265,9 @@ class InquiryController extends Controller
         );
     }
 
+    /**
+     * Show inquiry details.
+     */
     public function show(Inquiry $inquiry)
     {
         return view('admin.inquiries.show', [
@@ -146,6 +275,9 @@ class InquiryController extends Controller
         ]);
     }
 
+    /**
+     * Edit inquiry.
+     */
     public function edit(Inquiry $inquiry)
     {
         return view('admin.inquiries.edit', [
@@ -153,10 +285,18 @@ class InquiryController extends Controller
         ]);
     }
 
-    public function update(Request $request, Inquiry $inquiry)
-    {
+    /**
+     * Update overall inquiry state / response.
+     */
+    public function update(
+        Request $request,
+        Inquiry $inquiry
+    ) {
         $validated = $request->validate([
-            'status' => 'required|string',
+            'status' => [
+                'required',
+                'in:New,Read,Replied,Closed',
+            ],
             'response' => 'nullable|string',
         ]);
 
@@ -171,6 +311,9 @@ class InquiryController extends Controller
         );
     }
 
+    /**
+     * Delete inquiry.
+     */
     public function destroy(Inquiry $inquiry)
     {
         $inquiry->delete();
@@ -183,13 +326,68 @@ class InquiryController extends Controller
             );
     }
 
+    /**
+     * Re-analyze inquiry using AI.
+     */
     public function reanalyze(Inquiry $inquiry)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Do not re-analyze closed lead lifecycles.
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            in_array(
+                $inquiry->lead_status,
+                ['Converted', 'Lost'],
+                true
+            )
+        ) {
+            return back()->with(
+                'error',
+                'AI re-analysis is disabled for Converted or Lost leads.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Do not queue duplicate AI jobs.
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            in_array(
+                $inquiry->ai_status,
+                ['Pending', 'Processing'],
+                true
+            )
+        ) {
+            return back()->with(
+                'error',
+                'AI analysis is already pending or processing.'
+            );
+        }
+
         $inquiry->update([
             'ai_status' => 'Pending',
         ]);
 
+        Log::info(
+            'Re-analysis requested. Dispatching AI analysis job.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
+
         AnalyzeInquiryJob::dispatch($inquiry->id);
+
+        Log::info(
+            'AI re-analysis job dispatched.',
+            [
+                'inquiry_id' => $inquiry->id,
+            ]
+        );
 
         return back()->with(
             'success',
@@ -197,6 +395,9 @@ class InquiryController extends Controller
         );
     }
 
+    /**
+     * Update lead lifecycle status.
+     */
     public function updateLeadStatus(
         Request $request,
         Inquiry $inquiry
@@ -208,16 +409,114 @@ class InquiryController extends Controller
             ],
         ]);
 
-        $inquiry->update([
-            'lead_status' => $validated['lead_status'],
-        ]);
+        $currentStatus = $inquiry->lead_status ?? 'New';
+        $newStatus = $validated['lead_status'];
+
+        /*
+        |--------------------------------------------------------------------------
+        | No change
+        |--------------------------------------------------------------------------
+        */
+
+        if ($currentStatus === $newStatus) {
+            return back()->with(
+                'success',
+                'Lead status remains unchanged.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Terminal states cannot be changed.
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            in_array(
+                $currentStatus,
+                ['Converted', 'Lost'],
+                true
+            )
+        ) {
+            return back()->with(
+                'error',
+                "Lead status '{$currentStatus}' is closed and cannot be changed."
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Allowed lifecycle transitions
+        |--------------------------------------------------------------------------
+        */
+
+        $allowedTransitions = [
+            'New' => [
+                'Contacted',
+                'Lost',
+            ],
+
+            'Contacted' => [
+                'Qualified',
+                'Lost',
+            ],
+
+            'Qualified' => [
+                'Converted',
+                'Lost',
+            ],
+        ];
+
+        if (
+            ! in_array(
+                $newStatus,
+                $allowedTransitions[$currentStatus] ?? [],
+                true
+            )
+        ) {
+            return back()->with(
+                'error',
+                "Invalid lead transition: {$currentStatus} → {$newStatus}."
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update lead lifecycle
+        |--------------------------------------------------------------------------
+        */
+
+        $updateData = [
+            'lead_status' => $newStatus,
+        ];
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contact timestamp
+        |--------------------------------------------------------------------------
+        |
+        | Contacted is now the single UI path for recording contact.
+        |
+        */
+
+        if (
+            $newStatus === 'Contacted' &&
+            $currentStatus !== 'Contacted'
+        ) {
+            $updateData['last_contacted_at'] = now();
+        }
+
+        $inquiry->update($updateData);
 
         return back()->with(
             'success',
-            'Lead status updated successfully.'
+            "Lead status updated to {$newStatus}."
         );
     }
 
+    /**
+     * Update follow-up information.
+     */
     public function updateFollowUp(
         Request $request,
         Inquiry $inquiry
@@ -228,8 +527,11 @@ class InquiryController extends Controller
         ]);
 
         $inquiry->update([
-            'follow_up_date' => $validated['follow_up_date'] ?? null,
-            'follow_up_notes' => $validated['follow_up_notes'] ?? null,
+            'follow_up_date' =>
+                $validated['follow_up_date'] ?? null,
+
+            'follow_up_notes' =>
+                $validated['follow_up_notes'] ?? null,
         ]);
 
         return back()->with(
@@ -238,8 +540,40 @@ class InquiryController extends Controller
         );
     }
 
+    /**
+     * Legacy endpoint retained for route compatibility.
+     *
+     * The UI no longer uses this action.
+     */
     public function markContacted(Inquiry $inquiry)
     {
+        if (
+            in_array(
+                $inquiry->lead_status,
+                ['Converted', 'Lost'],
+                true
+            )
+        ) {
+            return back()->with(
+                'error',
+                'This lead is already closed.'
+            );
+        }
+
+        if ($inquiry->lead_status === 'Contacted') {
+            return back()->with(
+                'success',
+                'Lead is already marked as contacted.'
+            );
+        }
+
+        if ($inquiry->lead_status !== 'New') {
+            return back()->with(
+                'error',
+                'Lead must be New before it can be marked as Contacted.'
+            );
+        }
+
         $inquiry->update([
             'lead_status' => 'Contacted',
             'last_contacted_at' => now(),
