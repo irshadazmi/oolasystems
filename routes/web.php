@@ -34,8 +34,8 @@ Route::get('/industries', [PageController::class, 'industries'])
 Route::get('/portfolio', [PageController::class, 'portfolio'])
     ->name('portfolio');
 
-Route::get('/resources', [PageController::class, 'resources'])
-    ->name('resources');
+Route::get('/learnings', [PageController::class, 'learnings'])
+    ->name('learnings');
 
 Route::get('/contact', [PageController::class, 'contact'])
     ->name('contact');
@@ -312,6 +312,38 @@ Route::prefix('tutorials')->group(function () {
         [TutorialController::class, 'agenticAIShow']
     )->name('tutorial.agenticai.show');
 
+    /*
+    |--------------------------------------------------------------------------
+    | Linux Administration
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/linuxadmin',
+        [TutorialController::class, 'linuxadminIndex']
+    )->name('tutorial.linuxadmin.index');
+
+    Route::get(
+        '/linuxadmin/{slug}',
+        [TutorialController::class, 'linuxadminShow']
+    )->name('tutorial.linuxadmin.show');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cybersecurity
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/cybersecurity',
+        [TutorialController::class, 'cybersecurityIndex']
+    )->name('tutorial.cybersecurity.index');
+
+    Route::get(
+        '/cybersecurity/{slug}',
+        [TutorialController::class, 'cybersecurityShow']
+    )->name('tutorial.cybersecurity.show');
 
     /*
     |--------------------------------------------------------------------------

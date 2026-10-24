@@ -131,13 +131,13 @@
                 </li>
 
                 <li class="dropdown">
-                    <a class="oola-navbar__link dropdown-toggle {{ request()->routeIs('resources') || request()->is('tutorials/*') ? 'is-active' : '' }}"
-                        href="{{ route('resources') }}" id="resourcesDropdown" role="button" data-bs-toggle="dropdown"
+                    <a class="oola-navbar__link dropdown-toggle {{ request()->routeIs('learnings') || request()->is('tutorials/*') ? 'is-active' : '' }}"
+                        href="{{ route('learnings') }}" id="learningsDropdown" role="button" data-bs-toggle="dropdown"
                         data-bs-display="static" aria-expanded="false"
-                        @if (request()->routeIs('resources') || request()->is('tutorials/*')) aria-current="page" @endif>
-                        Resources
+                        @if (request()->routeIs('learnings') || request()->is('tutorials/*')) aria-current="page" @endif>
+                        Learnings
                     </a>
-                    <div class="dropdown-menu oola-dropdown-menu" aria-labelledby="resourcesDropdown">
+                    <div class="dropdown-menu oola-dropdown-menu" aria-labelledby="learningsDropdown">
                         <div class="row g-4">
                             <div class="col-12 col-lg-4">
                                 <h6 class="oola-dropdown__title">React Tutorials</h6>
@@ -149,14 +149,14 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-12 col-lg-3">
+                            <div class="col-12 col-lg-4">
                                 <h6 class="oola-dropdown__title">Java Tutorials</h6>
                                 <ul class="oola-dropdown__list">
                                     <li><a href="{{ route('tutorial.javafundamentals.index') }}">Fundamentals</a></li>
                                     <li><a href="{{ route('tutorial.springboot.index') }}">Spring Boot</a></li>
                                 </ul>
                             </div>
-                            <div class="col-12 col-lg-3">
+                            <div class="col-12 col-lg-4">
                                 <h6 class="oola-dropdown__title">.NET Tutorials</h6>
                                 <ul class="oola-dropdown__list">
                                     <li><a href="{{ route('tutorial.dotnet.fundamental.index') }}"> Fundamentals</a>
@@ -164,19 +164,26 @@
                                     <li><a href="{{ route('tutorial.dotnet.core.index') }}">Web API</a></li>
                                 </ul>
                             </div>
-                            <div class="col-12 col-lg-3">
+                        </div>
+                        <div class="row g-4 mt-1">
+                                <div class="col-12 col-lg-4">
                                 <h6 class="oola-dropdown__title">Data Engineering</h6>
                                 <ul class="oola-dropdown__list">
                                     <li><a href="{{ route('tutorial.gcpdatamodeling.index') }}">Data Modeling</a></li>
                                     <li><a href="{{ route('tutorial.dotnet.database.index') }}">Database</a></li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="row g-4 mt-1">
-                            <div class="col-12 col-lg-6">
+                            <div class="col-12 col-lg-4">
                                 <h6 class="oola-dropdown__title">Test Automation</h6>
                                 <ul class="oola-dropdown__list">
                                     <li><a href="{{ route('tutorial.selenium.index') }}">Selenium</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <h6 class="oola-dropdown__title">Industry Labs</h6>
+                                <ul class="oola-dropdown__list">
+                                    <li><a href="{{ route('tutorial.linuxadmin.index') }}">Linux Administration</a></li>
+                                    <li><a href="{{ route('tutorial.cybersecurity.index') }}">Cybersecurity &amp; Practices</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -310,27 +317,45 @@
             </div>
         </div>
 
-        <!-- Resources -->
+
+        <!-- Learnings -->
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button
-                    class="accordion-button collapsed {{ request()->routeIs('resources') || request()->is('tutorials/*') ? 'is-active' : '' }}"
-                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseResources"
-                    aria-expanded="false" aria-controls="collapseResources">
-                    Resources
+                    class="accordion-button collapsed {{ request()->routeIs('learnings') || request()->is('tutorials/*') ? 'is-active' : '' }}"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseLearnings"
+                    aria-expanded="false" aria-controls="collapseLearnings">
+                    Learnings
                 </button>
             </h2>
-            <div id="collapseResources" class="accordion-collapse collapse" data-bs-parent="#mobileMenuAccordion">
+
+            <div id="collapseLearnings" class="accordion-collapse collapse"
+                data-bs-parent="#mobileMenuAccordion">
                 <div class="accordion-body">
                     <ul class="list-unstyled">
+
+                        <li><h6 class="oola-dropdown__title">React Tutorials</h6></li>
                         <li><a href="{{ route('tutorial.reactnative.index') }}">React Native</a></li>
-                        <li><a href="{{ route('tutorial.javafundamentals.index') }}">Java</a></li>
+
+                        <li><h6 class="oola-dropdown__title">Java Tutorials</h6></li>
+                        <li><a href="{{ route('tutorial.javafundamentals.index') }}">Fundamentals</a></li>
                         <li><a href="{{ route('tutorial.springboot.index') }}">Spring Boot</a></li>
-                        <li><a href="{{ route('tutorial.dotnet.fundamental.index') }}">.NET Fundamentals</a></li>
-                        <li><a href="{{ route('tutorial.dotnet.core.index') }}">.NET Web API</a></li>
-                        <li><a href="{{ route('tutorial.dotnet.database.index') }}">Database</a></li>
+
+                        <li><h6 class="oola-dropdown__title">.NET Tutorials</h6></li>
+                        <li><a href="{{ route('tutorial.dotnet.fundamental.index') }}">Fundamentals</a></li>
+                        <li><a href="{{ route('tutorial.dotnet.core.index') }}">Web API</a></li>
+
+                        <li><h6 class="oola-dropdown__title">Data Engineering</h6></li>
                         <li><a href="{{ route('tutorial.gcpdatamodeling.index') }}">Data Modeling</a></li>
+                        <li><a href="{{ route('tutorial.dotnet.database.index') }}">Database</a></li>
+
+                        <li><h6 class="oola-dropdown__title">Test Automation</h6></li>
                         <li><a href="{{ route('tutorial.selenium.index') }}">Selenium</a></li>
+
+                        <li><h6 class="oola-dropdown__title">Industry Labs</h6></li>
+                        <li><a href="{{ route('tutorial.linuxadmin.index') }}">Linux Administration</a></li>
+                        <li><a href="{{ route('tutorial.cybersecurity.index') }}">Cybersecurity &amp; Practices</a></li>
+
                     </ul>
                 </div>
             </div>

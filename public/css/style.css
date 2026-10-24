@@ -870,6 +870,23 @@ p {
     color: var(--color-primary);
 }
 
+/* Mobile Learnings: group headings */
+.oola-mobile-accordion .accordion-body .oola-dropdown__title {
+    margin: 1rem 0 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.oola-mobile-accordion .accordion-body ul li:first-child .oola-dropdown__title {
+    margin-top: 0;
+}
+
+/* Tutorial links: smaller font and slight indentation */
+.oola-mobile-accordion .accordion-body ul li a {
+    padding: 0.35rem 0 0.35rem 0.75rem;
+    font-size: 0.9rem;
+}
+
 .oola-mobile-menu__cta {
     width: 100%;
     margin-top: auto;
@@ -3429,7 +3446,6 @@ hr {
     max-height: 420px;
 }
 
-
 /*
  * The reusable inquiry form is being displayed
  * inside the chatbot, so reduce unnecessary spacing.
@@ -3439,17 +3455,14 @@ hr {
     margin: 0;
 }
 
-
 .ai-chatbot-inquiry-form .form-control,
 .ai-chatbot-inquiry-form .form-select {
     font-size: 0.9rem;
 }
 
-
 .ai-chatbot-inquiry-form .mb-3 {
     margin-bottom: 0.75rem !important;
 }
-
 
 .ai-chatbot-inquiry-form textarea {
     min-height: 110px;

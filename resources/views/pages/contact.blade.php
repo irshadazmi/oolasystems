@@ -111,20 +111,6 @@
             <!-- RIGHT QUICK FORM -->
             <div class="col-lg-6 col-12">
                 <div class="p-4 shadow rounded bg-white">
-
-                    <h4 class="fw-bold">
-                        Request a Consultation
-                    </h4>
-
-                    <p class="text-muted mb-4">
-
-                        Tell us about your project, business goals,
-                        or technology challenges. Our team will review
-                        your requirements and get back to you within
-                        one business day.
-
-                    </p>
-
                     <x-forms.inquiry-form />
                 </div>
             </div>
@@ -139,8 +125,6 @@
             <!-- FULL FORM -->
             <div class="col-lg-7 col-12 mb-4">
                 <div class="p-4 shadow rounded bg-white h-100">
-
-                    <h4 class="fw-bold mb-3">Send us a detailed message</h4>
 
                     @if (session('success'))
                         <div class="alert alert-success">

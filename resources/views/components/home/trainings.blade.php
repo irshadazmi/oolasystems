@@ -3,7 +3,7 @@
     <div class="text-center mb-5">
 
         <div class="eyebrow">
-            Resources
+            Learning Resources
         </div>
 
         <h2 class="section-title">

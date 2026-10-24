@@ -265,6 +265,106 @@ class TutorialController extends Controller
         ]);
     }
 
+    // Linux Administration Index
+    public function linuxAdminIndex()
+    {
+        $chapters = $this->getChapters('views/content/tutorials/linuxadmin');
+        $first = $chapters->first();
+
+        $converter = new GithubFlavoredMarkdownConverter();
+        $path = resource_path("views/content/tutorials/linuxadmin/{$first['slug']}.md");
+
+        $chapterContent = File::exists($path)
+            ? $converter->convert(File::get($path))
+            : '';
+
+        return view('tutorial.index', [
+            'chapters' => $chapters,
+            'chapterTitle' => $first['title'],
+            'chapterContent' => $chapterContent,
+            'routePrefix' => 'tutorial.linuxadmin.show'
+        ]);
+    }
+
+    // Linux Administration Show
+    public function linuxAdminShow($slug)
+    {
+        $chapters = $this->getChapters('views/content/tutorials/linuxadmin');
+
+        $converter = new GithubFlavoredMarkdownConverter();
+
+        $path = resource_path("views/content/tutorials/linuxadmin/{$slug}.md");
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $chapterContent = $converter->convert(File::get($path));
+
+        // Navigation
+        $navigation = $this->getChapterNavigation($chapters, $slug);
+
+        return view('tutorial.show', [
+            'chapters' => $chapters,
+            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
+            'chapterContent' => $chapterContent,
+            'routePrefix' => 'tutorial.linuxadmin.show',
+
+            // Navigation
+            'prevChapter' => $navigation['prevChapter'],
+            'nextChapter' => $navigation['nextChapter'],
+        ]);
+    }
+
+    // Cybersecurity Index
+    public function cybersecurityIndex()
+    {
+        $chapters = $this->getChapters('views/content/tutorials/cybersecurity');
+        $first = $chapters->first();
+
+        $converter = new GithubFlavoredMarkdownConverter();
+        $path = resource_path("views/content/tutorials/cybersecurity/{$first['slug']}.md");
+
+        $chapterContent = File::exists($path)
+            ? $converter->convert(File::get($path))
+            : '';
+
+        return view('tutorial.index', [
+            'chapters' => $chapters,
+            'chapterTitle' => $first['title'],
+            'chapterContent' => $chapterContent,
+            'routePrefix' => 'tutorial.cybersecurity.show'
+        ]);
+    }
+
+    // Cybersecurity Show
+    public function cybersecurityShow($slug)
+    {
+        $chapters = $this->getChapters('views/content/tutorials/cybersecurity');
+        $converter = new GithubFlavoredMarkdownConverter();
+        $path = resource_path("views/content/tutorials/cybersecurity/{$slug}.md");
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $chapterContent = $converter->convert(File::get($path));
+
+        // Navigation
+        $navigation = $this->getChapterNavigation($chapters, $slug);
+
+        return view('tutorial.show', [
+            'chapters' => $chapters,
+            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
+            'chapterContent' => $chapterContent,
+            'routePrefix' => 'tutorial.cybersecurity.show',
+
+            // Navigation
+            'prevChapter' => $navigation['prevChapter'],
+            'nextChapter' => $navigation['nextChapter'],
+        ]);
+    }
+
     // Spring Boot Index
     public function springBootIndex()
     {
@@ -290,9 +390,7 @@ class TutorialController extends Controller
     public function springBootShow($slug)
     {
         $chapters = $this->getChapters('views/content/tutorials/springboot');
-
         $converter = new GithubFlavoredMarkdownConverter();
-
         $path = resource_path("views/content/tutorials/springboot/{$slug}.md");
 
         if (!File::exists($path)) {
