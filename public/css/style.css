@@ -881,10 +881,481 @@ p {
     margin-top: 0;
 }
 
-/* Tutorial links: smaller font and slight indentation */
+
+/* ==========================================================
+   OOLA TUTORIALS — SIDEBAR & CHAPTER NAVIGATION
+   ========================================================== */
 .oola-mobile-accordion .accordion-body ul li a {
     padding: 0.35rem 0 0.35rem 0.75rem;
     font-size: 0.9rem;
+}
+
+.tutorial-page {
+    --tutorial-surface: #171717;
+    --tutorial-hover: #202725;
+    --tutorial-border: #343a39;
+    --tutorial-text: #f5f7f7;
+    --tutorial-muted: #bfbfbf;
+    --tutorial-accent: #35d0ba;
+    --tutorial-accent-soft: rgba(53, 208, 186, 0.12);
+}
+
+/* Chapter sidebar container */
+.tutorial-sidebar {
+    overflow: hidden;
+    border: 1px solid var(--tutorial-border);
+    border-radius: 14px;
+    background: var(--tutorial-surface);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Chapter links */
+.tutorial-sidebar .list-group-item {
+    display: block;
+    padding: 0.85rem 1rem;
+    border: 0;
+    border-bottom: 1px solid var(--tutorial-border);
+    border-radius: 0;
+    background: transparent;
+    color: var(--tutorial-muted);
+    font-size: 0.94rem;
+    line-height: 1.5;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition:
+        color 180ms ease,
+        background-color 180ms ease;
+}
+
+.tutorial-sidebar .list-group-item:last-child {
+    border-bottom: 0;
+}
+
+/* Hover and keyboard focus */
+.tutorial-sidebar .list-group-item:hover,
+.tutorial-sidebar .list-group-item:focus-visible {
+    background: var(--tutorial-hover);
+    color: var(--tutorial-accent);
+}
+
+/* Currently selected chapter */
+.tutorial-sidebar .list-group-item.active,
+.tutorial-sidebar .list-group-item.active:hover {
+    border-color: var(--tutorial-border);
+    background: var(--tutorial-accent-soft);
+    color: var(--tutorial-accent);
+    font-weight: 650;
+    box-shadow: inset 3px 0 0 var(--tutorial-accent);
+}
+
+/* Bottom navigation row */
+.tutorial-navigation {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--tutorial-border);
+}
+
+.tutorial-navigation > div:first-child {
+    justify-self: start;
+}
+
+.tutorial-navigation > div:nth-child(2) {
+    justify-self: center;
+}
+
+.tutorial-navigation > div:last-child {
+    justify-self: end;
+}
+
+/* Common button appearance */
+.tutorial-navigation .tutorial-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-width: 112px;
+    min-height: 44px;
+    padding: 0.7rem 1.15rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.94rem;
+    font-weight: 650;
+    line-height: 1.2;
+    text-decoration: none;
+    box-shadow: none;
+    transition:
+        color 180ms ease,
+        background-color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
+}
+
+/* Previous button — outlined teal */
+.tutorial-navigation .tutorial-nav-btn.btn-outline-primary {
+    border-color: var(--tutorial-accent);
+    background: transparent;
+    color: var(--tutorial-accent);
+}
+
+.tutorial-navigation .tutorial-nav-btn.btn-outline-primary:hover {
+    background: var(--tutorial-accent-soft);
+    color: #ffffff;
+}
+
+/* Top button — subtle dark style */
+.tutorial-navigation .tutorial-nav-btn.btn-dark {
+    border-color: var(--tutorial-border);
+    background: var(--tutorial-surface);
+    color: var(--tutorial-text);
+}
+
+.tutorial-navigation .tutorial-nav-btn.btn-dark:hover {
+    border-color: var(--tutorial-accent);
+    background: var(--tutorial-hover);
+    color: var(--tutorial-accent);
+}
+
+/* Next button — primary teal */
+.tutorial-navigation .tutorial-nav-btn.btn-primary {
+    border-color: var(--tutorial-accent);
+    background: var(--tutorial-accent);
+    color: #071411;
+}
+
+.tutorial-navigation .tutorial-nav-btn.btn-primary:hover,
+.tutorial-navigation .tutorial-nav-btn.btn-primary:focus-visible {
+    border-color: var(--tutorial-accent);
+    background: #27bda8;
+    color: #071411;
+    box-shadow: 0 6px 18px rgba(53, 208, 186, 0.18);
+}
+
+/* Subtle movement on hover */
+.tutorial-navigation .tutorial-nav-btn:hover {
+    transform: translateY(-1px);
+}
+
+.tutorial-navigation .tutorial-nav-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile layout */
+@media (max-width: 575.98px) {
+    .tutorial-sidebar .list-group-item {
+        padding: 0.75rem 0.85rem;
+        font-size: 0.9rem;
+    }
+
+    .tutorial-navigation {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .tutorial-navigation > div:nth-child(2) {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        justify-self: center;
+    }
+
+    .tutorial-navigation > div:first-child {
+        justify-self: start;
+    }
+
+    .tutorial-navigation > div:last-child {
+        justify-self: end;
+    }
+
+    .tutorial-navigation .tutorial-nav-btn {
+        min-width: 0;
+        min-height: 42px;
+        padding: 0.65rem 0.9rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .tutorial-sidebar .list-group-item,
+    .tutorial-navigation .tutorial-nav-btn {
+        transition: none;
+    }
+}
+
+
+
+/* ==========================================================
+   OOLA TUTORIALS — SIDEBAR & NAVIGATION
+   ========================================================== */
+
+.code-block-wrapper {
+    position: relative;
+    margin: 1.25rem 0;
+}
+
+/* Copy button */
+.code-block-wrapper .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0.25rem;
+    padding: 0.45rem 0.9rem;
+
+    background: #202020 !important;
+    color: #35d0ba !important;
+    border: 1px solid #35d0ba !important;
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.4;
+
+    cursor: pointer;
+    box-shadow: none;
+    transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
+}
+
+/* Hover and keyboard focus */
+.code-block-wrapper .copy-btn:hover,
+.code-block-wrapper .copy-btn:focus-visible {
+    background: #35d0ba !important;
+    color: #071411 !important;
+    border-color: #35d0ba !important;
+}
+
+.code-block-wrapper .copy-btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+}
+
+/* Click feedback */
+.code-block-wrapper .copy-btn:active {
+    transform: scale(0.97);
+}
+
+/* Successfully copied */
+.code-block-wrapper .copy-btn.copied {
+    background: #35d0ba !important;
+    color: #071411 !important;
+    border-color: #35d0ba !important;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .code-block-wrapper .copy-btn {
+        transition: none;
+    }
+}
+
+:root {
+    --tutorial-bg: #171717;
+    --tutorial-hover: #202725;
+    --tutorial-border: #343a39;
+    --tutorial-text: #d0d0d0;
+    --tutorial-accent: #35d0ba;
+    --tutorial-accent-soft: rgba(53, 208, 186, 0.12);
+}
+
+/* Chapter sidebar */
+.tutorial-sidebar {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--tutorial-bg) !important;
+    border: 1px solid var(--tutorial-border) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.tutorial-sidebar .list-group-item {
+    display: block;
+    padding: 14px 18px;
+    border: 0 !important;
+    border-bottom: 1px solid var(--tutorial-border) !important;
+    border-radius: 0 !important;
+    background: var(--tutorial-bg) !important;
+    color: var(--tutorial-text) !important;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+.tutorial-sidebar .list-group-item:last-child {
+    border-bottom: 0 !important;
+}
+
+.tutorial-sidebar .list-group-item:hover,
+.tutorial-sidebar .list-group-item:focus-visible {
+    background: var(--tutorial-hover) !important;
+    color: var(--tutorial-accent) !important;
+}
+
+/* Active chapter */
+.tutorial-sidebar .list-group-item.active {
+    padding-left: 15px;
+    border-left: 3px solid var(--tutorial-accent) !important;
+    background: var(--tutorial-accent-soft) !important;
+    color: var(--tutorial-accent) !important;
+    font-weight: 700;
+}
+
+/* Bottom navigation */
+.tutorial-navigation {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--tutorial-border);
+}
+
+.tutorial-navigation > div {
+    flex: 0 0 auto;
+}
+
+.tutorial-navigation > div:nth-child(2) {
+    margin-inline: auto;
+}
+
+/* Shared button styles */
+.tutorial-navigation .tutorial-nav-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 120px;
+    min-height: 46px;
+    padding: 11px 20px !important;
+    border: 1px solid transparent !important;
+    border-radius: 999px !important;
+    font-size: 0.95rem;
+    font-weight: 650;
+    line-height: 1.2;
+    text-decoration: none;
+    text-shadow: none;
+    box-shadow: none;
+    transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
+}
+
+.tutorial-navigation .tutorial-nav-btn i {
+    color: inherit !important;
+}
+
+/* Previous */
+.tutorial-navigation .tutorial-nav-btn.btn-outline-primary {
+    background: transparent !important;
+    color: var(--tutorial-accent) !important;
+    border-color: var(--tutorial-accent) !important;
+}
+
+.tutorial-navigation .tutorial-nav-btn.btn-outline-primary:hover {
+    background: var(--tutorial-accent-soft) !important;
+    color: #ffffff !important;
+}
+
+/* Top */
+.tutorial-navigation .tutorial-nav-btn.btn-dark {
+    background: #202020 !important;
+    color: #ffffff !important;
+    border-color: #404040 !important;
+}
+
+.tutorial-navigation .tutorial-nav-btn.btn-dark:hover {
+    background: #252525 !important;
+    color: var(--tutorial-accent) !important;
+    border-color: var(--tutorial-accent) !important;
+}
+
+/* Next */
+.tutorial-navigation .tutorial-nav-btn.btn-primary {
+    background: var(--tutorial-accent) !important;
+    color: #071411 !important;
+    border-color: var(--tutorial-accent) !important;
+}
+
+.tutorial-navigation .tutorial-nav-btn.btn-primary:hover,
+.tutorial-navigation .tutorial-nav-btn.btn-primary:focus-visible {
+    background: #27bda8 !important;
+    color: #071411 !important;
+    border-color: #27bda8 !important;
+    box-shadow: 0 6px 18px rgba(53, 208, 186, 0.18);
+}
+
+.tutorial-navigation .tutorial-nav-btn:hover {
+    transform: translateY(-1px);
+}
+
+.tutorial-navigation .tutorial-nav-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile */
+@media (max-width: 575.98px) {
+    .tutorial-sidebar .list-group-item {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+    }
+
+    .tutorial-navigation {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .tutorial-navigation > div:nth-child(2) {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        justify-self: center;
+        margin-inline: 0;
+    }
+
+    .tutorial-navigation > div:first-child {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: start;
+    }
+
+    .tutorial-navigation > div:last-child {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: end;
+    }
+
+    .tutorial-navigation .tutorial-nav-btn {
+        min-width: 0;
+        min-height: 42px;
+        padding: 10px 14px !important;
+        font-size: 0.9rem;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .tutorial-sidebar .list-group-item,
+    .tutorial-navigation .tutorial-nav-btn {
+        transition: none;
+    }
+
+    .tutorial-navigation .tutorial-nav-btn:hover {
+        transform: none;
+    }
 }
 
 .oola-mobile-menu__cta {
@@ -1948,6 +2419,69 @@ p {
 
 .table-bordered {
     border-color: var(--color-border);
+}
+
+
+/* ==========================================================
+   Markdown Tables — Oola Systems Purple Theme
+   ========================================================== */
+
+.markdown-body table {
+    width: 100%;
+    margin: 1.5rem 0;
+    border-collapse: collapse;
+    border: 1px solid #8b79b8;
+    color: #f1edf9;
+    background-color: #211a30;
+}
+
+/* Header: distinct deep purple */
+.markdown-body thead th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #59358c;
+    border: 1px solid #a994d6;
+}
+
+/* Cell borders and spacing */
+.markdown-body tbody td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #786493;
+    vertical-align: top;
+}
+
+/* Alternating purple-tinted rows */
+.markdown-body tbody tr:nth-child(odd) {
+    background-color: #302440;
+}
+
+.markdown-body tbody tr:nth-child(even) {
+    background-color: #3b2b50;
+}
+
+/* Subtle hover highlight */
+.markdown-body tbody tr {
+    transition: background-color 180ms ease;
+}
+
+.markdown-body tbody tr:hover {
+    background-color: #4b3768;
+}
+
+/* Mobile: allow wide tables to scroll horizontally */
+@media (max-width: 768px) {
+    .markdown-body table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .markdown-body thead th,
+    .markdown-body tbody td {
+        min-width: 110px;
+        padding: 0.65rem 0.75rem;
+    }
 }
 
 .badge.bg-warning {
@@ -3466,4 +4000,160 @@ hr {
 
 .ai-chatbot-inquiry-form textarea {
     min-height: 110px;
+}
+
+
+
+/* ==========================================================================
+   Learnings mega menu
+   Uses the existing Oola navbar tokens and Bootstrap dropdown behavior.
+   ========================================================================== */
+
+.oola-dropdown-menu--learnings {
+    width: min(880px, calc(100vw - 40px));
+    min-width: min(720px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    padding: 1.35rem 1.5rem 1rem;
+    border: 1px solid rgba(32, 191, 175, 0.22);
+    border-radius: 18px;
+    background: rgba(13, 13, 16, 0.98);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(16px);
+}
+
+.oola-learnings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4rem 1.6rem;
+}
+
+.oola-learning-group {
+    min-width: 0;
+}
+
+.oola-dropdown-menu--learnings .oola-dropdown__title {
+    min-height: 2.1em;
+    margin: 0 0 0.55rem;
+    color: var(--color-primary);
+    font-size: 0.76rem;
+    line-height: 1.4;
+    letter-spacing: 0.075em;
+}
+
+.oola-dropdown-menu--learnings .oola-dropdown__list li + li {
+    margin-top: 0.2rem;
+}
+
+.oola-dropdown-menu--learnings .oola-dropdown__list a {
+    display: block;
+    padding: 0.38rem 0.55rem;
+    margin: 0;
+    border-radius: 7px;
+    color: var(--color-text-secondary);
+    font-size: 0.87rem;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.oola-dropdown-menu--learnings .oola-dropdown__list a:hover,
+.oola-dropdown-menu--learnings .oola-dropdown__list a:focus-visible {
+    padding: 0.38rem 0.55rem;
+    color: var(--color-primary);
+    background: rgba(32, 191, 175, 0.09);
+    transform: translateX(2px);
+    outline: none;
+}
+
+.oola-learnings-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.15rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+}
+
+.oola-learnings-footer a,
+.oola-mobile-learning-overview {
+    color: var(--color-primary);
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.oola-learnings-footer a:hover,
+.oola-mobile-learning-overview:hover {
+    text-decoration: underline;
+}
+
+.oola-mobile-learning-body {
+    padding-top: 0.15rem !important;
+}
+
+.oola-mobile-learning-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.oola-mobile-learning-group {
+    padding: 0.65rem 0 0.45rem;
+}
+
+.oola-mobile-learning-group + .oola-mobile-learning-group {
+    border-top: 1px solid var(--color-border);
+}
+
+.oola-mobile-learning-group h3 {
+    margin: 0 0 0.45rem;
+    color: var(--color-primary);
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.07em;
+    line-height: 1.45;
+    text-transform: uppercase;
+}
+
+.oola-mobile-learning-group ul {
+    margin: 0;
+}
+
+.oola-mobile-learning-group li + li {
+    margin-top: 0.15rem;
+}
+
+.oola-mobile-learning-group a {
+    display: block;
+    padding: 0.42rem 0.15rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.oola-mobile-learning-group a:hover,
+.oola-mobile-learning-group a:focus-visible {
+    color: var(--color-primary);
+}
+
+@media (max-width: 1199.98px) and (min-width: 992px) {
+    .oola-dropdown-menu--learnings {
+        width: min(760px, calc(100vw - 24px));
+        min-width: min(680px, calc(100vw - 24px));
+    }
+
+    .oola-learnings-grid {
+        gap: 1.15rem 1rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .oola-dropdown-menu--learnings {
+        width: auto;
+        min-width: 0;
+    }
 }

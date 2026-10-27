@@ -2,499 +2,144 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class TutorialController extends Controller
 {
-    // Java Fundamentals Index
-    public function javaFundamentalsIndex()
+    /**
+     * Display the first chapter and chapter list for a tutorial.
+     *
+     * The tutorial is resolved from the existing named route, so the public
+     * URL and route name do not need to change.
+     */
+    public function index(Request $request)
     {
-        $chapters = $this->getChapters('views/content/tutorials/javafundamentals');
-        $first = $chapters->first();
+        $tutorial = $this->tutorialForRoute($request->route()->getName(), 'index');
+        $chapters = $this->getChapters($tutorial['content_path']);
 
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/javafundamentals/{$first['slug']}.md");
+        abort_if($chapters->isEmpty(), 404, 'No tutorial chapters are available.');
 
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
+        $firstChapter = $chapters->first();
 
         return view('tutorial.index', [
+            'tutorial' => $tutorial,
             'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.javafundamentals.show'
+            'chapterTitle' => $firstChapter['title'],
+            'chapterContent' => $this->convertChapter(
+                $tutorial['content_path'],
+                $firstChapter['slug']
+            ),
+            'routePrefix' => $tutorial['show_route'],
         ]);
     }
 
-    // Java Fundamentals Show
-    public function javaFundamentalsShow($slug)
+    /**
+     * Display a specific chapter and its previous/next navigation.
+     */
+    public function show(Request $request, string $slug)
     {
-        $chapters = $this->getChapters('views/content/tutorials/javafundamentals');
+        $tutorial = $this->tutorialForRoute($request->route()->getName(), 'show');
+        $chapters = $this->getChapters($tutorial['content_path']);
+        $chapter = $chapters->firstWhere('slug', $slug);
 
-        $converter = new GithubFlavoredMarkdownConverter();
+        abort_unless($chapter, 404);
 
-        $path = resource_path("views/content/tutorials/javafundamentals/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
-        }
-
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
         $navigation = $this->getChapterNavigation($chapters, $slug);
 
         return view('tutorial.show', [
+            'tutorial' => $tutorial,
             'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.javafundamentals.show',
-
-            // Navigation
+            'chapterTitle' => $chapter['title'],
+            'chapterContent' => $this->convertChapter(
+                $tutorial['content_path'],
+                $slug
+            ),
+            'routePrefix' => $tutorial['show_route'],
             'prevChapter' => $navigation['prevChapter'],
             'nextChapter' => $navigation['nextChapter'],
         ]);
     }
 
-    // React Native Index
-    public function reactNativeIndex()
+    /**
+     * Resolve tutorial configuration from the current named route.
+     */
+    private function tutorialForRoute(?string $routeName, string $pageType): array
     {
-        $chapters = $this->getChapters('views/content/tutorials/reactnative');
-        $first = $chapters->first();
+        abort_unless($routeName, 404);
 
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/reactnative/{$first['slug']}.md");
+        foreach (config('tutorials.catalog', []) as $tutorial) {
+            $configuredRoute = $pageType === 'index'
+                ? ($tutorial['index_route'] ?? null)
+                : ($tutorial['show_route'] ?? null);
 
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
-
-        return view('tutorial.index', [
-            'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.reactnative.show'
-        ]);
-    }
-
-    // React Native Show
-    public function reactNativeShow($slug)
-    {
-        $chapters = $this->getChapters('views/content/tutorials/reactnative');
-
-        $converter = new GithubFlavoredMarkdownConverter();
-
-        $path = resource_path("views/content/tutorials/reactnative/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
+            if ($configuredRoute === $routeName) {
+                return $tutorial;
+            }
         }
 
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
-        $navigation = $this->getChapterNavigation($chapters, $slug);
-
-        return view('tutorial.show', [
-            'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.reactnative.show',
-
-            // Navigation
-            'prevChapter' => $navigation['prevChapter'],
-            'nextChapter' => $navigation['nextChapter'],
-        ]);
+        abort(404, 'Tutorial not found.');
     }
 
-
-    // Agentic AI Index
-    public function agenticAIIndex()
+    /**
+     * Discover Markdown chapters and read their H1 headings as titles.
+     * Natural sorting ensures chapter2.md appears before chapter10.md.
+     */
+    private function getChapters(string $contentPath): Collection
     {
-        $chapters = $this->getChapters('views/content/tutorials/agenticai');
-        $first = $chapters->first();
+        $directory = resource_path($contentPath);
 
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/agenticai/{$first['slug']}.md");
+        abort_unless(File::isDirectory($directory), 404, 'Tutorial content not found.');
 
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
+        return collect(File::files($directory))
+            ->filter(fn ($file) => strtolower($file->getExtension()) === 'md')
+            ->map(function ($file) {
+                $slug = pathinfo($file->getFilename(), PATHINFO_FILENAME);
+                $content = File::get($file->getPathname());
 
-        return view('tutorial.index', [
-            'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.agenticai.show'
-        ]);
+                preg_match('/^#\s+(.+)$/m', $content, $matches);
+
+                return [
+                    'slug' => $slug,
+                    'title' => trim($matches[1] ?? ucfirst(str_replace('-', ' ', $slug))),
+                ];
+            })
+            ->sortBy('slug', SORT_NATURAL | SORT_FLAG_CASE)
+            ->values();
     }
 
-    // Agentic AI Show
-    public function agenticAIShow($slug)
+    /**
+     * Convert a Markdown chapter to HTML using the same CommonMark library
+     * already used by the existing controller.
+     */
+    private function convertChapter(string $contentPath, string $slug): string
     {
-        $chapters = $this->getChapters('views/content/tutorials/agenticai');
+        // Only accept a slug discovered from the Markdown chapter list.
+        abort_unless(preg_match('/^[A-Za-z0-9_-]+$/', $slug), 404);
 
-        $converter = new GithubFlavoredMarkdownConverter();
+        $path = resource_path($contentPath . DIRECTORY_SEPARATOR . $slug . '.md');
 
-        $path = resource_path("views/content/tutorials/agenticai/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
-        }
-
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
-        $navigation = $this->getChapterNavigation($chapters, $slug);
-
-        return view('tutorial.show', [
-            'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.agenticai.show',
-
-            // Navigation
-            'prevChapter' => $navigation['prevChapter'],
-            'nextChapter' => $navigation['nextChapter'],
-        ]);
-    }
-
-
-    // GCP Data Modeling Index
-    public function gcpDataModelingIndex()
-    {
-        $chapters = $this->getChapters('views/content/tutorials/gcpdatamodeling');
-        $first = $chapters->first();
-
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/gcpdatamodeling/{$first['slug']}.md");
-
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
-
-        return view('tutorial.index', [
-            'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.gcpdatamodeling.show'
-        ]);
-    }
-
-    // GCP Data Modeling Show
-    public function gcpDataModelingShow($slug)
-    {
-        $chapters = $this->getChapters('views/content/tutorials/gcpdatamodeling');
+        abort_unless(File::exists($path), 404);
 
         $converter = new GithubFlavoredMarkdownConverter();
 
-        $path = resource_path("views/content/tutorials/gcpdatamodeling/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
-        }
-
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
-        $navigation = $this->getChapterNavigation($chapters, $slug);
-
-        return view('tutorial.show', [
-            'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.gcpdatamodeling.show',
-
-            // Navigation
-            'prevChapter' => $navigation['prevChapter'],
-            'nextChapter' => $navigation['nextChapter'],
-        ]);
+        return (string) $converter->convert(File::get($path));
     }
 
-
-    // Selenium Index
-    public function seleniumIndex()
-    {
-        $chapters = $this->getChapters('views/content/tutorials/selenium');
-        $first = $chapters->first();
-
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/selenium/{$first['slug']}.md");
-
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
-
-        return view('tutorial.index', [
-            'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.selenium.show'
-        ]);
-    }
-
-    // Selenium Show
-    public function seleniumShow($slug)
-    {
-        $chapters = $this->getChapters('views/content/tutorials/selenium');
-
-        $converter = new GithubFlavoredMarkdownConverter();
-
-        $path = resource_path("views/content/tutorials/selenium/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
-        }
-
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
-        $navigation = $this->getChapterNavigation($chapters, $slug);
-
-        return view('tutorial.show', [
-            'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.selenium.show',
-
-            // Navigation
-            'prevChapter' => $navigation['prevChapter'],
-            'nextChapter' => $navigation['nextChapter'],
-        ]);
-    }
-
-    // Linux Administration Index
-    public function linuxAdminIndex()
-    {
-        $chapters = $this->getChapters('views/content/tutorials/linuxadmin');
-        $first = $chapters->first();
-
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/linuxadmin/{$first['slug']}.md");
-
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
-
-        return view('tutorial.index', [
-            'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.linuxadmin.show'
-        ]);
-    }
-
-    // Linux Administration Show
-    public function linuxAdminShow($slug)
-    {
-        $chapters = $this->getChapters('views/content/tutorials/linuxadmin');
-
-        $converter = new GithubFlavoredMarkdownConverter();
-
-        $path = resource_path("views/content/tutorials/linuxadmin/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
-        }
-
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
-        $navigation = $this->getChapterNavigation($chapters, $slug);
-
-        return view('tutorial.show', [
-            'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.linuxadmin.show',
-
-            // Navigation
-            'prevChapter' => $navigation['prevChapter'],
-            'nextChapter' => $navigation['nextChapter'],
-        ]);
-    }
-
-    // Cybersecurity Index
-    public function cybersecurityIndex()
-    {
-        $chapters = $this->getChapters('views/content/tutorials/cybersecurity');
-        $first = $chapters->first();
-
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/cybersecurity/{$first['slug']}.md");
-
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
-
-        return view('tutorial.index', [
-            'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.cybersecurity.show'
-        ]);
-    }
-
-    // Cybersecurity Show
-    public function cybersecurityShow($slug)
-    {
-        $chapters = $this->getChapters('views/content/tutorials/cybersecurity');
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/cybersecurity/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
-        }
-
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
-        $navigation = $this->getChapterNavigation($chapters, $slug);
-
-        return view('tutorial.show', [
-            'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.cybersecurity.show',
-
-            // Navigation
-            'prevChapter' => $navigation['prevChapter'],
-            'nextChapter' => $navigation['nextChapter'],
-        ]);
-    }
-
-    // Spring Boot Index
-    public function springBootIndex()
-    {
-        $chapters = $this->getChapters('views/content/tutorials/springboot');
-        $first = $chapters->first();
-
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/springboot/{$first['slug']}.md");
-
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
-
-        return view('tutorial.index', [
-            'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.springboot.show'
-        ]);
-    }
-
-    // Spring Boot Show
-    public function springBootShow($slug)
-    {
-        $chapters = $this->getChapters('views/content/tutorials/springboot');
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/springboot/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
-        }
-
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
-        $navigation = $this->getChapterNavigation($chapters, $slug);
-
-        return view('tutorial.show', [
-            'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.springboot.show',
-
-            // Navigation
-            'prevChapter' => $navigation['prevChapter'],
-            'nextChapter' => $navigation['nextChapter'],
-        ]);
-    }
-
-    // .NET Fundamentals Index
-    public function dotnetFundamentalIndex()
-    {
-        $chapters = $this->getChapters('views/content/tutorials/dotnet/fundamental');
-        $first = $chapters->first();
-
-        $converter = new GithubFlavoredMarkdownConverter();
-        $path = resource_path("views/content/tutorials/dotnet/fundamental/{$first['slug']}.md");
-
-        $chapterContent = File::exists($path)
-            ? $converter->convert(File::get($path))
-            : '';
-
-        return view('tutorial.index', [
-            'chapters' => $chapters,
-            'chapterTitle' => $first['title'],
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.dotnet.fundamental.show'
-        ]);
-    }
-
-    // .NET Fundamentals Show
-    public function dotnetFundamentalShow($slug)
-    {
-        $chapters = $this->getChapters('views/content/tutorials/dotnet/fundamental');
-
-        $converter = new GithubFlavoredMarkdownConverter();
-
-        $path = resource_path("views/content/tutorials/dotnet/fundamental/{$slug}.md");
-
-        if (!File::exists($path)) {
-            abort(404);
-        }
-
-        $chapterContent = $converter->convert(File::get($path));
-
-        // Navigation
-        $navigation = $this->getChapterNavigation($chapters, $slug);
-
-        return view('tutorial.show', [
-            'chapters' => $chapters,
-            'chapterTitle' => ucfirst(str_replace('-', ' ', $slug)),
-            'chapterContent' => $chapterContent,
-            'routePrefix' => 'tutorial.dotnet.fundamental.show',
-
-            // Navigation
-            'prevChapter' => $navigation['prevChapter'],
-            'nextChapter' => $navigation['nextChapter'],
-        ]);
-    }
-
-    // Shared helper
-    private function getChapters($folder = 'views/content/tutorials/reactnative')
-    {
-        $files = File::files(resource_path($folder));
-
-        return collect($files)->map(function ($file) {
-            $slug = pathinfo($file->getFilename(), PATHINFO_FILENAME);
-            $content = File::get($file->getPathname());
-
-            preg_match('/^#\s+(.*)$/m', $content, $matches);
-            $title = $matches[1] ?? ucfirst(str_replace('-', ' ', $slug));
-
-            return [
-                'slug'  => $slug,
-                'title' => $title,
-            ];
-        })->sortBy('slug')->values();
-    }
-
-    private function getChapterNavigation($chapters, $slug)
+    /**
+     * Return previous and next chapter slugs.
+     */
+    private function getChapterNavigation(Collection $chapters, string $slug): array
     {
         $slugs = $chapters->pluck('slug')->values();
-
         $currentIndex = $slugs->search($slug);
 
-        return [
-            'prevChapter' => $currentIndex > 0
-                ? $slugs[$currentIndex - 1]
-                : null,
+        abort_if($currentIndex === false, 404);
 
+        return [
+            'prevChapter' => $currentIndex > 0 ? $slugs[$currentIndex - 1] : null,
             'nextChapter' => $currentIndex < $slugs->count() - 1
                 ? $slugs[$currentIndex + 1]
                 : null,

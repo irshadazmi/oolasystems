@@ -130,62 +130,105 @@
                     </div>
                 </li>
 
-                <li class="dropdown">
-                    <a class="oola-navbar__link dropdown-toggle {{ request()->routeIs('learnings') || request()->is('tutorials/*') ? 'is-active' : '' }}"
-                        href="{{ route('learnings') }}" id="learningsDropdown" role="button" data-bs-toggle="dropdown"
-                        data-bs-display="static" aria-expanded="false"
-                        @if (request()->routeIs('learnings') || request()->is('tutorials/*')) aria-current="page" @endif>
+                <li class="dropdown oola-navbar__item--learnings">
+                    <a class="oola-navbar__link dropdown-toggle {{ request()->is('tutorials') || request()->is('tutorials/*') ? 'is-active' : '' }}"
+                        href="#" id="learningsDropdown" role="button" data-bs-toggle="dropdown"
+                        data-bs-display="static" aria-expanded="false" onclick="event.preventDefault()"
+                        @if (request()->is('tutorials') || request()->is('tutorials/*')) aria-current="page" @endif>
                         Learnings
                     </a>
-                    <div class="dropdown-menu oola-dropdown-menu" aria-labelledby="learningsDropdown">
-                        <div class="row g-4">
-                            <div class="col-12 col-lg-4">
-                                <h6 class="oola-dropdown__title">React Tutorials</h6>
+
+                    <div class="dropdown-menu oola-dropdown-menu oola-dropdown-menu--learnings"
+                        aria-labelledby="learningsDropdown">
+                        <div class="oola-learnings-grid">
+                            <section class="oola-learning-group">
+                                <h6 class="oola-dropdown__title">Application Development</h6>
                                 <ul class="oola-dropdown__list">
-                                    <li>
-                                        <a href="{{ route('tutorial.reactnative.index') }}">
-                                            React Native
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <h6 class="oola-dropdown__title">Java Tutorials</h6>
-                                <ul class="oola-dropdown__list">
-                                    <li><a href="{{ route('tutorial.javafundamentals.index') }}">Fundamentals</a></li>
+                                    <li><a href="{{ route('tutorial.reactnative.index') }}">React Native &amp; Expo</a></li>
+                                    <li><a href="{{ route('tutorial.javafundamentals.index') }}">Java Fundamentals</a></li>
                                     <li><a href="{{ route('tutorial.springboot.index') }}">Spring Boot</a></li>
+                                    <li><a href="{{ route('tutorial.dotnet.fundamental.index') }}">.NET Fundamentals</a></li>
+                                    <li><a href="{{ route('tutorial.dotnet.core.index') }}">.NET Web API</a></li>
+                                    <li><a href="{{ route('tutorial.dotnet.frontend.index') }}">Frontend Development</a></li>
                                 </ul>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <h6 class="oola-dropdown__title">.NET Tutorials</h6>
-                                <ul class="oola-dropdown__list">
-                                    <li><a href="{{ route('tutorial.dotnet.fundamental.index') }}"> Fundamentals</a>
-                                    </li>
-                                    <li><a href="{{ route('tutorial.dotnet.core.index') }}">Web API</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row g-4 mt-1">
-                                <div class="col-12 col-lg-4">
-                                <h6 class="oola-dropdown__title">Data Engineering</h6>
+                            </section>
+
+                            <section class="oola-learning-group">
+                                <h6 class="oola-dropdown__title">Data &amp; Cloud Engineering</h6>
                                 <ul class="oola-dropdown__list">
                                     <li><a href="{{ route('tutorial.gcpdatamodeling.index') }}">Data Modeling</a></li>
-                                    <li><a href="{{ route('tutorial.dotnet.database.index') }}">Database</a></li>
+                                    <li><a href="{{ route('tutorial.dotnet.database.index') }}">Database &amp; Data Access</a></li>
                                 </ul>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <h6 class="oola-dropdown__title">Test Automation</h6>
+                            </section>
+
+                            <section class="oola-learning-group">
+                                <h6 class="oola-dropdown__title">Quality &amp; Security</h6>
                                 <ul class="oola-dropdown__list">
-                                    <li><a href="{{ route('tutorial.selenium.index') }}">Selenium</a></li>
+                                    <li><a href="{{ route('tutorial.selenium.index') }}">Selenium Test Automation</a></li>
                                 </ul>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <h6 class="oola-dropdown__title">Industry Labs</h6>
+                            </section>
+
+                            <section class="oola-learning-group">
+                                <h6 class="oola-dropdown__title">AI &amp; Emerging Technologies</h6>
+                                <ul class="oola-dropdown__list">
+                                    <li><a href="{{ route('tutorial.agenticai.index') }}">Agentic AI</a></li>
+                                </ul>
+                            </section>
+
+                            <section class="oola-learning-group">
+                                <h6 class="oola-dropdown__title">Industrial Learning Labs</h6>
                                 <ul class="oola-dropdown__list">
                                     <li><a href="{{ route('tutorial.linuxadmin.index') }}">Linux Administration</a></li>
                                     <li><a href="{{ route('tutorial.cybersecurity.index') }}">Cybersecurity &amp; Practices</a></li>
+                                    <li><a href="{{ route('tutorial.githubjira.index') }}">GitHub &amp; Jira</a></li>
                                 </ul>
-                            </div>
+                            </section>
+                        </div>
+
+                        <div class="oola-learnings-footer">
+                            <span>Practical tutorials for professional skills</span>
+                            <span class="oola-learnings-footer__hint">Choose a topic to get started <span aria-hidden="true">→</span></span>
+                        </div>
+                    </div>
+                </li>
+                <!-- OolaLabs: Industry projects and mentoring -->
+                <li class="dropdown oola-navbar__item--oolalabs">
+                    <a class="oola-navbar__link dropdown-toggle {{ request()->is('industrial-training') || request()->is('industrial-training/*') ? 'is-active' : '' }}"
+                        href="#" id="oolaLabsDropdown" role="button" data-bs-toggle="dropdown"
+                        data-bs-display="static" aria-expanded="false" onclick="event.preventDefault()"
+                        @if (request()->is('industrial-training') || request()->is('industrial-training/*')) aria-current="page" @endif>
+                        OolaLabs
+                    </a>
+                    <div class="dropdown-menu oola-dropdown-menu oola-dropdown-menu--oolalabs" aria-labelledby="oolaLabsDropdown">
+                        <div class="oola-oolalabs-grid">
+                            <section class="oola-oolalabs-group oola-oolalabs-intro">
+                                <span class="oola-oolalabs-eyebrow">BUILD FOR THE REAL WORLD</span>
+                                <h6 class="oola-dropdown__title">OolaLabs</h6>
+                                <p>Industry-inspired software projects, guided engineering practice and expert mentoring.</p>
+                                <a class="oola-oolalabs-cta" href="{{ url('/industrial-training') }}">Explore OolaLabs <span aria-hidden="true">→</span></a>
+                            </section>
+                            <section class="oola-oolalabs-group">
+                                <h6 class="oola-dropdown__title">Explore Projects</h6>
+                                <ul class="oola-dropdown__list">
+                                    <li><a href="{{ url('/industrial-training#catalogue') }}">Browse Project Catalogue</a></li>
+                                    <li><a href="{{ url('/industrial-training#enterprise-systems') }}">Enterprise Business Systems</a></li>
+                                    <li><a href="{{ url('/industrial-training#ai-data') }}">AI &amp; Data Engineering</a></li>
+                                    <li><a href="{{ url('/industrial-training#cloud-distributed') }}">Cloud &amp; Distributed Systems</a></li>
+                                </ul>
+                            </section>
+                            <section class="oola-oolalabs-group">
+                                <h6 class="oola-dropdown__title">Ways to Participate</h6>
+                                <ul class="oola-dropdown__list">
+                                    <li><a href="{{ url('/industrial-training#training-models') }}">Guided Project Development</a></li>
+                                    <li><a href="{{ url('/industrial-training#training-models') }}">Advanced Project Mentoring</a></li>
+                                    <li><a href="{{ url('/industrial-training#training-models') }}">Team-Based Industrial Projects</a></li>
+                                    <li><a href="{{ url('/industrial-training#how-it-works') }}">How It Works</a></li>
+                                </ul>
+                            </section>
+                        </div>
+                        <div class="oola-oolalabs-footer">
+                            <span>Public project synopses · Detailed resources available through authorized access</span>
+                            <a href="{{ url('/industrial-training#apply') }}">Discuss a Project <span aria-hidden="true">→</span></a>
                         </div>
                     </div>
                 </li>
@@ -317,46 +360,89 @@
             </div>
         </div>
 
-
         <!-- Learnings -->
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button
-                    class="accordion-button collapsed {{ request()->routeIs('learnings') || request()->is('tutorials/*') ? 'is-active' : '' }}"
+                    class="accordion-button collapsed {{ request()->is('tutorials') || request()->is('tutorials/*') ? 'is-active' : '' }}"
                     type="button" data-bs-toggle="collapse" data-bs-target="#collapseLearnings"
                     aria-expanded="false" aria-controls="collapseLearnings">
                     Learnings
                 </button>
             </h2>
+            <div id="collapseLearnings" class="accordion-collapse collapse" data-bs-parent="#mobileMenuAccordion">
+                <div class="accordion-body oola-mobile-learning-body">
+                    <p class="oola-mobile-learning-overview">Choose a learning topic below to get started.</p>
 
-            <div id="collapseLearnings" class="accordion-collapse collapse"
-                data-bs-parent="#mobileMenuAccordion">
-                <div class="accordion-body">
+                    <div class="oola-mobile-learning-group">
+                        <h3>Application Development</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ route('tutorial.reactnative.index') }}">React Native &amp; Expo</a></li>
+                            <li><a href="{{ route('tutorial.javafundamentals.index') }}">Java Fundamentals</a></li>
+                            <li><a href="{{ route('tutorial.springboot.index') }}">Spring Boot</a></li>
+                            <li><a href="{{ route('tutorial.dotnet.fundamental.index') }}">.NET Fundamentals</a></li>
+                            <li><a href="{{ route('tutorial.dotnet.core.index') }}">.NET Web API</a></li>
+                            <li><a href="{{ route('tutorial.dotnet.frontend.index') }}">Frontend Development</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="oola-mobile-learning-group">
+                        <h3>Data &amp; Cloud Engineering</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ route('tutorial.gcpdatamodeling.index') }}">Data Modeling</a></li>
+                            <li><a href="{{ route('tutorial.dotnet.database.index') }}">Database &amp; Data Access</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="oola-mobile-learning-group">
+                        <h3>Quality &amp; Security</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ route('tutorial.selenium.index') }}">Selenium Test Automation</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="oola-mobile-learning-group">
+                        <h3>AI &amp; Emerging Technologies</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ route('tutorial.agenticai.index') }}">Agentic AI</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="oola-mobile-learning-group">
+                        <h3>Industrial Learning Labs</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ route('tutorial.linuxadmin.index') }}">Linux Administration</a></li>
+                            <li><a href="{{ route('tutorial.cybersecurity.index') }}">Cybersecurity &amp; Practices</a></li>
+                            <li><a href="{{ route('tutorial.githubjira.index') }}">GitHub &amp; Jira</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OolaLabs: Industry projects and mentoring -->
+        <div class="accordion-item oola-mobile-oolalabs">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed {{ request()->is('industrial-training') || request()->is('industrial-training/*') ? 'is-active' : '' }}"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseOolaLabs"
+                    aria-expanded="false" aria-controls="collapseOolaLabs">
+                    OolaLabs
+                </button>
+            </h2>
+            <div id="collapseOolaLabs" class="accordion-collapse collapse" data-bs-parent="#mobileMenuAccordion">
+                <div class="accordion-body oola-mobile-oolalabs-body">
+                    <p>Industry-inspired software projects, guided engineering practice and expert mentoring.</p>
                     <ul class="list-unstyled">
-
-                        <li><h6 class="oola-dropdown__title">React Tutorials</h6></li>
-                        <li><a href="{{ route('tutorial.reactnative.index') }}">React Native</a></li>
-
-                        <li><h6 class="oola-dropdown__title">Java Tutorials</h6></li>
-                        <li><a href="{{ route('tutorial.javafundamentals.index') }}">Fundamentals</a></li>
-                        <li><a href="{{ route('tutorial.springboot.index') }}">Spring Boot</a></li>
-
-                        <li><h6 class="oola-dropdown__title">.NET Tutorials</h6></li>
-                        <li><a href="{{ route('tutorial.dotnet.fundamental.index') }}">Fundamentals</a></li>
-                        <li><a href="{{ route('tutorial.dotnet.core.index') }}">Web API</a></li>
-
-                        <li><h6 class="oola-dropdown__title">Data Engineering</h6></li>
-                        <li><a href="{{ route('tutorial.gcpdatamodeling.index') }}">Data Modeling</a></li>
-                        <li><a href="{{ route('tutorial.dotnet.database.index') }}">Database</a></li>
-
-                        <li><h6 class="oola-dropdown__title">Test Automation</h6></li>
-                        <li><a href="{{ route('tutorial.selenium.index') }}">Selenium</a></li>
-
-                        <li><h6 class="oola-dropdown__title">Industry Labs</h6></li>
-                        <li><a href="{{ route('tutorial.linuxadmin.index') }}">Linux Administration</a></li>
-                        <li><a href="{{ route('tutorial.cybersecurity.index') }}">Cybersecurity &amp; Practices</a></li>
-
+                        <li><a href="{{ url('/industrial-training') }}">Explore OolaLabs</a></li>
+                        <li><a href="{{ url('/industrial-training#catalogue') }}">Browse Project Catalogue</a></li>
+                        <li><a href="{{ url('/industrial-training#enterprise-systems') }}">Enterprise Business Systems</a></li>
+                        <li><a href="{{ url('/industrial-training#ai-data') }}">AI &amp; Data Engineering</a></li>
+                        <li><a href="{{ url('/industrial-training#cloud-distributed') }}">Cloud &amp; Distributed Systems</a></li>
+                        <li><a href="{{ url('/industrial-training#training-models') }}">Training &amp; Mentoring Options</a></li>
+                        <li><a href="{{ url('/industrial-training#how-it-works') }}">How It Works</a></li>
+                        <li><a href="{{ url('/industrial-training#apply') }}">Apply / Discuss a Project</a></li>
                     </ul>
+                    <small>Detailed project resources are provided through authorized access.</small>
                 </div>
             </div>
         </div>

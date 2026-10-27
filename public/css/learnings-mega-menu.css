@@ -1,0 +1,153 @@
+/* ==========================================================================
+   Learnings mega menu
+   Uses the existing Oola navbar tokens and Bootstrap dropdown behavior.
+   ========================================================================== */
+
+.oola-dropdown-menu--learnings {
+    width: min(880px, calc(100vw - 40px));
+    min-width: min(720px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    padding: 1.35rem 1.5rem 1rem;
+    border: 1px solid rgba(32, 191, 175, 0.22);
+    border-radius: 18px;
+    background: rgba(13, 13, 16, 0.98);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(16px);
+}
+
+.oola-learnings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4rem 1.6rem;
+}
+
+.oola-learning-group {
+    min-width: 0;
+}
+
+.oola-dropdown-menu--learnings .oola-dropdown__title {
+    min-height: 2.1em;
+    margin: 0 0 0.55rem;
+    color: var(--color-primary);
+    font-size: 0.76rem;
+    line-height: 1.4;
+    letter-spacing: 0.075em;
+}
+
+.oola-dropdown-menu--learnings .oola-dropdown__list li + li {
+    margin-top: 0.2rem;
+}
+
+.oola-dropdown-menu--learnings .oola-dropdown__list a {
+    display: block;
+    padding: 0.38rem 0.55rem;
+    margin: 0;
+    border-radius: 7px;
+    color: var(--color-text-secondary);
+    font-size: 0.87rem;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.oola-dropdown-menu--learnings .oola-dropdown__list a:hover,
+.oola-dropdown-menu--learnings .oola-dropdown__list a:focus-visible {
+    padding: 0.38rem 0.55rem;
+    color: var(--color-primary);
+    background: rgba(32, 191, 175, 0.09);
+    transform: translateX(2px);
+    outline: none;
+}
+
+.oola-learnings-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.15rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+}
+
+.oola-learnings-footer a,
+.oola-mobile-learning-overview {
+    color: var(--color-primary);
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.oola-learnings-footer a:hover,
+.oola-mobile-learning-overview:hover {
+    text-decoration: underline;
+}
+
+.oola-mobile-learning-body {
+    padding-top: 0.15rem !important;
+}
+
+.oola-mobile-learning-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.oola-mobile-learning-group {
+    padding: 0.65rem 0 0.45rem;
+}
+
+.oola-mobile-learning-group + .oola-mobile-learning-group {
+    border-top: 1px solid var(--color-border);
+}
+
+.oola-mobile-learning-group h3 {
+    margin: 0 0 0.45rem;
+    color: var(--color-primary);
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.07em;
+    line-height: 1.45;
+    text-transform: uppercase;
+}
+
+.oola-mobile-learning-group ul {
+    margin: 0;
+}
+
+.oola-mobile-learning-group li + li {
+    margin-top: 0.15rem;
+}
+
+.oola-mobile-learning-group a {
+    display: block;
+    padding: 0.42rem 0.15rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.oola-mobile-learning-group a:hover,
+.oola-mobile-learning-group a:focus-visible {
+    color: var(--color-primary);
+}
+
+@media (max-width: 1199.98px) and (min-width: 992px) {
+    .oola-dropdown-menu--learnings {
+        width: min(760px, calc(100vw - 24px));
+        min-width: min(680px, calc(100vw - 24px));
+    }
+
+    .oola-learnings-grid {
+        gap: 1.15rem 1rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .oola-dropdown-menu--learnings {
+        width: auto;
+        min-width: 0;
+    }
+}

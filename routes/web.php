@@ -292,210 +292,78 @@ Route::middleware('auth')
 |--------------------------------------------------------------------------
 | Tutorials
 |--------------------------------------------------------------------------
+|
+| Keep all existing URL paths and route names. Only replace each controller
+| action with the generic index/show methods. TutorialController resolves
+| which tutorial to load from the current route name.
+|
 */
 
 Route::prefix('tutorials')->group(function () {
+    Route::get('/agenticai', [TutorialController::class, 'index'])
+        ->name('tutorial.agenticai.index');
+    Route::get('/agenticai/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.agenticai.show');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Agentic AI
-    |--------------------------------------------------------------------------
-    */
+    Route::get('/linuxadmin', [TutorialController::class, 'index'])
+        ->name('tutorial.linuxadmin.index');
+    Route::get('/linuxadmin/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.linuxadmin.show');
 
-    Route::get(
-        '/agenticai',
-        [TutorialController::class, 'agenticAIIndex']
-    )->name('tutorial.agenticai.index');
+    Route::get('/cybersecurity', [TutorialController::class, 'index'])
+        ->name('tutorial.cybersecurity.index');
+    Route::get('/cybersecurity/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.cybersecurity.show');
 
-    Route::get(
-        '/agenticai/{slug}',
-        [TutorialController::class, 'agenticAIShow']
-    )->name('tutorial.agenticai.show');
+    Route::get('/githubjira', [TutorialController::class, 'index'])
+        ->name('tutorial.githubjira.index');
+    Route::get('/githubjira/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.githubjira.show');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Linux Administration
-    |--------------------------------------------------------------------------
-    */
+    Route::get('/javafundamentals', [TutorialController::class, 'index'])
+        ->name('tutorial.javafundamentals.index');
+    Route::get('/javafundamentals/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.javafundamentals.show');
 
-    Route::get(
-        '/linuxadmin',
-        [TutorialController::class, 'linuxadminIndex']
-    )->name('tutorial.linuxadmin.index');
+    Route::get('/reactnative', [TutorialController::class, 'index'])
+        ->name('tutorial.reactnative.index');
+    Route::get('/reactnative/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.reactnative.show');
 
-    Route::get(
-        '/linuxadmin/{slug}',
-        [TutorialController::class, 'linuxadminShow']
-    )->name('tutorial.linuxadmin.show');
+    Route::get('/gcpdatamodeling', [TutorialController::class, 'index'])
+        ->name('tutorial.gcpdatamodeling.index');
+    Route::get('/gcpdatamodeling/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.gcpdatamodeling.show');
 
+    Route::get('/selenium', [TutorialController::class, 'index'])
+        ->name('tutorial.selenium.index');
+    Route::get('/selenium/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.selenium.show');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Cybersecurity
-    |--------------------------------------------------------------------------
-    */
+    Route::get('/springboot', [TutorialController::class, 'index'])
+        ->name('tutorial.springboot.index');
+    Route::get('/springboot/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.springboot.show');
 
-    Route::get(
-        '/cybersecurity',
-        [TutorialController::class, 'cybersecurityIndex']
-    )->name('tutorial.cybersecurity.index');
+    Route::get('/dotnet/fundamental', [TutorialController::class, 'index'])
+        ->name('tutorial.dotnet.fundamental.index');
+    Route::get('/dotnet/fundamental/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.dotnet.fundamental.show');
 
-    Route::get(
-        '/cybersecurity/{slug}',
-        [TutorialController::class, 'cybersecurityShow']
-    )->name('tutorial.cybersecurity.show');
+    Route::get('/dotnet/core', [TutorialController::class, 'index'])
+        ->name('tutorial.dotnet.core.index');
+    Route::get('/dotnet/core/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.dotnet.core.show');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Java Fundamentals
-    |--------------------------------------------------------------------------
-    */
+    Route::get('/dotnet/database', [TutorialController::class, 'index'])
+        ->name('tutorial.dotnet.database.index');
+    Route::get('/dotnet/database/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.dotnet.database.show');
 
-    Route::get(
-        '/javafundamentals',
-        [TutorialController::class, 'javaFundamentalsIndex']
-    )->name('tutorial.javafundamentals.index');
-
-    Route::get(
-        '/javafundamentals/{slug}',
-        [TutorialController::class, 'javaFundamentalsShow']
-    )->name('tutorial.javafundamentals.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | React Native
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get(
-        '/reactnative',
-        [TutorialController::class, 'reactNativeIndex']
-    )->name('tutorial.reactnative.index');
-
-    Route::get(
-        '/reactnative/{slug}',
-        [TutorialController::class, 'reactNativeShow']
-    )->name('tutorial.reactnative.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | GCP Data Modeling
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get(
-        '/gcpdatamodeling',
-        [TutorialController::class, 'gcpDataModelingIndex']
-    )->name('tutorial.gcpdatamodeling.index');
-
-    Route::get(
-        '/gcpdatamodeling/{slug}',
-        [TutorialController::class, 'gcpDataModelingShow']
-    )->name('tutorial.gcpdatamodeling.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Selenium
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get(
-        '/selenium',
-        [TutorialController::class, 'seleniumIndex']
-    )->name('tutorial.selenium.index');
-
-    Route::get(
-        '/selenium/{slug}',
-        [TutorialController::class, 'seleniumShow']
-    )->name('tutorial.selenium.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Spring Boot
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get(
-        '/springboot',
-        [TutorialController::class, 'springBootIndex']
-    )->name('tutorial.springboot.index');
-
-    Route::get(
-        '/springboot/{slug}',
-        [TutorialController::class, 'springBootShow']
-    )->name('tutorial.springboot.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | .NET Fundamentals
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get(
-        '/dotnet/fundamental',
-        [TutorialController::class, 'dotnetfundamentalIndex']
-    )->name('tutorial.dotnet.fundamental.index');
-
-    Route::get(
-        '/dotnet/fundamental/{slug}',
-        [TutorialController::class, 'dotnetfundamentalShow']
-    )->name('tutorial.dotnet.fundamental.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | .NET Core & Web Development
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get(
-        '/dotnet/core',
-        [TutorialController::class, 'dotnetCoreIndex']
-    )->name('tutorial.dotnet.core.index');
-
-    Route::get(
-        '/dotnet/core/{slug}',
-        [TutorialController::class, 'dotnetCoreShow']
-    )->name('tutorial.dotnet.core.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Database & Data Access
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get(
-        '/dotnet/database',
-        [TutorialController::class, 'dotnetDatabaseIndex']
-    )->name('tutorial.dotnet.database.index');
-
-    Route::get(
-        '/dotnet/database/{slug}',
-        [TutorialController::class, 'dotnetDatabaseShow']
-    )->name('tutorial.dotnet.database.show');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Frontend
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get(
-        '/dotnet/frontend',
-        [TutorialController::class, 'dotnetFrontendIndex']
-    )->name('tutorial.dotnet.frontend.index');
-
-    Route::get(
-        '/dotnet/frontend/{slug}',
-        [TutorialController::class, 'dotnetFrontendShow']
-    )->name('tutorial.dotnet.frontend.show');
+    Route::get('/dotnet/frontend', [TutorialController::class, 'index'])
+        ->name('tutorial.dotnet.frontend.index');
+    Route::get('/dotnet/frontend/{slug}', [TutorialController::class, 'show'])
+        ->name('tutorial.dotnet.frontend.show');
 });
 
 

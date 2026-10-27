@@ -1,94 +1,85 @@
-# Tutorial: Practical Linux Administration for Developers & Future System Administrators
+# Tutorial: Practical Cybersecurity & Practices for Developers and Future Security Professionals
 
-Welcome to this hands-on tutorial for learning **Linux Administration** through practical, industry-oriented exercises. Across 15 one-hour lectures, we will build the skills needed to inspect, operate, secure, and troubleshoot a Linux environment using **Ubuntu, the command line, system utilities, and Bash**.
+Welcome to this hands-on tutorial for learning **Cybersecurity & Practices** through practical, industry-oriented exercises. Across 15 one-hour lectures, we will build foundational skills to recognise security risks, protect accounts and systems, examine evidence, assess web application weaknesses, and recommend practical mitigations.
 
-The tutorial is designed for **B.Tech students**. It connects Linux concepts to real tasks performed by developers, system administrators, cloud engineers, DevOps teams, and production support engineers.
+The tutorial is designed for **B.Tech students**. It connects cybersecurity concepts to tasks performed by software developers, IT support teams, system administrators, cloud engineers, security analysts, and incident-response teams.
 
-Our examples will use a safe Linux lab. You can use **Ubuntu on WSL 2**, an Ubuntu virtual machine, an existing Linux system you are authorised to use, or an instructor-approved browser terminal where suitable. Some administration tasks require a full Linux VM or appropriate privileges; the tutorial will identify those requirements before each lab.
+Our activities use safe, controlled learning environments: sample data, instructor-provided packet captures, intentionally vulnerable training applications such as **OWASP Juice Shop**, and approved learning resources. Perform security testing only on systems you own or have explicit permission to test.
 
 ---
 
 ## About this Tutorial
 
-The goal is to learn Linux by practising common operational tasks rather than memorising commands in isolation. Each chapter builds on skills introduced earlier and follows the 15-lecture **Linux Administration** syllabus.
+The goal is to learn cybersecurity by applying concepts to realistic scenarios rather than memorising terminology in isolation. Each chapter builds on earlier skills and follows the 15-lecture **Cybersecurity & Practices** syllabus.
 
 Across the tutorial, you will practise how to:
 
-- Explore Linux distributions, the kernel, the shell, and the filesystem.
-- Navigate directories, find help, and use command-line tools confidently.
-- Inspect and filter text and log files with pipes and redirection.
-- Understand users, groups, permissions, ownership, and least privilege.
-- Inspect packages, processes, system resources, services, and logs.
-- Diagnose basic network and connectivity problems.
-- Understand SSH and key-based remote administration.
-- Inspect filesystems, mounts, and disk usage.
-- Write a basic Bash script and schedule routine work.
-- Apply introductory hardening, backup, and troubleshooting practices.
+- Explain the confidentiality, integrity, and availability (CIA) triad.
+- Identify assets, threats, vulnerabilities, likelihood, impact, and risk.
+- Recognise phishing attempts and improve password, MFA, and account-protection practices.
+- Use basic networking tools to inspect IP addresses, ports, DNS, and HTTP/HTTPS behaviour.
+- Understand Linux accounts, file permissions, and least privilege.
+- Examine sample authentication logs and preserve useful evidence.
+- Map application scenarios to common web security risks, including OWASP Top 10 topics.
+- Review authentication and session-management workflows.
+- Compare unsafe SQL construction with parameterized database queries.
+- Practise in an intentionally vulnerable web application in an isolated lab.
+- Inspect a supplied network packet capture with Wireshark.
+- Prepare endpoint-hardening, patching, backup, and recovery checklists.
+- Review cloud IAM, API keys, secrets, and secure software-delivery practices.
+- Work through an incident-response tabletop exercise and present evidence-based recommendations.
 
-The examples use Ubuntu where possible. Commands and service-management details can differ between distributions, Linux environments, and permission levels; each lab will call out relevant limitations.
+The examples are introductory and defensive. Tool availability and commands can vary by operating system and lab environment; each activity should identify its prerequisites and limitations.
 
 ---
 
 ## What You Will Learn
 
-This tutorial progresses from Linux fundamentals to practical system operations and a final troubleshooting capstone.
+This tutorial progresses from security foundations to practical analysis, prevention, response, and a final mini-project assessment.
 
-### 🐧 Linux Foundations and Command-Line Skills
+### 🔐 Security Foundations and Account Protection
 
-- Linux ecosystem, distributions, kernel, shell, and common use cases
-- Lab setup using WSL 2, a virtual machine, or an approved alternative
-- Command-line essentials, paths, help, and directory navigation
-- Files, text processing, pipes, redirection, and log searching
-
----
-
-### 👥 Users, Groups, and Access Control
-
-- User and group concepts
-- Administrative privileges and the purpose of `sudo`
-- File permissions and ownership
-- `chmod`, `chown`, and default permissions with `umask`
-- Least privilege and safe access-control practices
+- Cybersecurity foundations, the CIA triad, threats, vulnerabilities, and risk
+- Asset–threat–control mapping and basic risk assessment
+- Password hygiene, multi-factor authentication (MFA), phishing, and account protection
+- Recognising suspicious messages and describing safer user actions
 
 ---
 
-### 📦 Packages, Processes, and Services
+### 🌐 Networking and Linux Security Basics
 
-- Package managers, repositories, and updates
-- Process inspection and resource monitoring
-- CPU, memory, and disk usage
-- Services, `systemd`, service status, and service logs
-- A systematic approach to diagnosing service failures
-
----
-
-### 🌐 Networking and Remote Administration
-
-- IP addresses, hostnames, DNS, and connectivity checks
-- Common command-line networking tools
-- SSH and secure remote access
-- SSH keys and host verification
-- Safe troubleshooting without disabling security controls blindly
+- IP addresses, ports, DNS, HTTP, and HTTPS
+- Basic network commands and `curl` for approved connectivity checks
+- Linux accounts, permissions, and least privilege
+- Reading sample authentication logs and documenting investigation evidence
 
 ---
 
-### 💽 Storage, Logs, and Troubleshooting
+### 🕸️ Web Application Security
 
-- Filesystems, mount points, and disk utilisation
-- System and service logs
-- Evidence-based troubleshooting methodology
-- Identifying likely causes before changing a system
-- Recording findings and verifying the result of a change
+- OWASP Top 10 and common web application risks
+- Authentication, session management, and secure access
+- Input validation, injection, and secure database access
+- Comparing unsafe SQL examples with parameterized queries
+- Introductory, authorised practice with OWASP Juice Shop in an isolated lab
 
 ---
 
-### ⚙️ Bash Automation, Hardening, and Operations
+### 🧰 Network, Endpoint, and Cloud Protection
 
-- Bash scripts for repeatable administrative tasks
-- Scheduling and basic automation
-- Server-hardening and firewall fundamentals
-- Backup and file-restoration concepts
-- Runbooks, operational checks, and a practical capstone assessment
+- Inspecting a supplied packet capture using Wireshark
+- Endpoint protection, patching, and backup practices
+- Cloud security fundamentals, identity and access management (IAM), API keys, and secrets
+- Secure software delivery and dependency-risk review
+
+---
+
+### 🚨 Incident Response and Security Assessment
+
+- Incident response, containment, and recovery
+- Evidence-based investigation and clear documentation
+- Tabletop exercises for practising response decisions
+- Mini-project presentations that communicate findings, evidence, risk, and mitigations
 
 ---
 
@@ -96,19 +87,19 @@ This tutorial progresses from Linux fundamentals to practical system operations 
 
 Each chapter is designed for a one-hour session and combines concise explanations with practical work. Depending on the topic, chapters may include:
 
-- Concept explanations and architecture diagrams
-- Realistic operational scenarios
-- Commands with explanations and expected observations
-- Step-by-step hands-on labs
+- Concept explanations and simple diagrams
+- Realistic security scenarios
+- Step-by-step hands-on labs using free or instructor-approved tools
+- Sample logs, packet captures, code snippets, or intentionally vulnerable applications
 - Safety notes and troubleshooting guidance
 - Knowledge-check questions
 - Practice exercises and review questions
 
 We follow one principle throughout:
 
-**Learn by doing. Inspect first, make a controlled change, and verify the outcome.**
+**Use authorised labs, collect evidence carefully, explain the risk, and recommend a verifiable mitigation.**
 
-You should understand what a command does before running it. Do not copy commands that delete files, alter permissions, modify system configuration, or change networking unless you understand the effect and are working in the designated lab environment.
+Do not test a public website, university system, another student's account, or any third-party service unless you have explicit authorisation and a clearly defined scope. Never collect, expose, or share real passwords, tokens, private keys, or personal data.
 
 ---
 
@@ -116,122 +107,120 @@ You should understand what a command does before running it. Do not copy command
 
 | Lecture | Topic | Practical focus |
 |---:|---|---|
-| 1 | Linux ecosystem, distributions, kernel, shell, and lab setup | Launch a Linux environment and inspect it |
-| 2 | Command-line essentials, paths, help, and navigation | Practise commands and navigate directories |
-| 3 | Files, text processing, pipes, and redirection | Search and filter sample log files |
-| 4 | Users, groups, `sudo`, and access control | Explore user and group administration in a suitable lab |
-| 5 | Permissions, ownership, `chmod`, `chown`, and `umask` | Configure a shared project directory in a lab |
-| 6 | Packages, repositories, and updates | Inspect package information and install an approved package |
-| 7 | Processes, CPU, memory, and disk monitoring | Inspect processes and resource usage |
-| 8 | Services, `systemd`, and service logs | Inspect and troubleshoot a service where supported |
-| 9 | Networking, IP addresses, DNS, and connectivity | Diagnose a simulated connectivity problem |
-| 10 | SSH, keys, and remote administration | Generate an SSH key and examine host verification |
-| 11 | Storage, filesystems, mounts, and disk usage | Inspect mount points and disk utilisation |
-| 12 | System logs and troubleshooting methodology | Diagnose a supplied service-failure scenario |
-| 13 | Bash scripting, scheduling, and automation | Write a disk-usage reporting script |
-| 14 | Server hardening, firewall basics, and backups | Apply safe controls and test file restoration |
-| 15 | Operations capstone, runbook, and assessment | Demonstrate a configured environment and troubleshoot a problem |
+| 1 | Cybersecurity foundations, CIA triad, threats, vulnerabilities and risk | Create an asset–threat–control matrix |
+| 2 | Passwords, MFA, phishing and account protection | Analyse phishing examples and security practices |
+| 3 | Networking for security: IP, ports, DNS, HTTP/HTTPS | Use basic networking commands and curl |
+| 4 | Linux accounts, permissions and least privilege | Create users and inspect file permissions |
+| 5 | Logs, evidence and incident investigation | Analyse sample authentication logs |
+| 6 | OWASP Top 10 and web application risks | Map scenarios to common vulnerabilities |
+| 7 | Authentication, session management and secure access | Review a sample login workflow |
+| 8 | Input validation, injection and secure database access | Compare unsafe and parameterized SQL examples |
+| 9 | Practical web security using OWASP Juice Shop | Complete a beginner challenge in an isolated lab |
+| 10 | Network traffic analysis using Wireshark | Inspect a supplied packet capture |
+| 11 | Endpoint protection, patching and backups | Prepare a workstation hardening checklist |
+| 12 | Cloud security, IAM, API keys and secrets | Review a sample cloud/API architecture |
+| 13 | Secure software delivery and dependency risks | Review a repository security checklist |
+| 14 | Incident response, containment and recovery | Conduct an incident-response tabletop exercise |
+| 15 | Mini-project presentations and assessment | Present findings, evidence and mitigations |
 
-A few activities may need an Ubuntu VM or an instructor-managed environment because WSL 2 and browser terminals do not expose every system-administration feature in the same way as a full Linux server.
+A few activities may require an instructor-provided environment, sample packet capture, or intentionally vulnerable training application. Do not substitute a real production target for a lab exercise.
 
 ---
 
 ## Our Practice Environment
 
-We will use a small, repeatable lab directory for exercises that create files or sample data. For example, you can keep course work under:
+Use the environment specified by the instructor for each exercise. Depending on the lecture, you may work with:
 
-```bash
-mkdir -p ~/linux-lab
-cd ~/linux-lab
-pwd
-```
+- **A local computer or approved Linux environment** for basic commands and file-permission exercises.
+- **Sample files** containing fictional authentication events, security scenarios, or application data.
+- **Wireshark** with an instructor-provided packet capture for network-traffic analysis.
+- **OWASP Juice Shop** or another intentionally vulnerable training application, run locally or through an instructor-approved isolated lab.
+- **OWASP Web Security Academy** for guided web-security learning where appropriate.
+- **Code snippets and sample repositories** for reviewing SQL queries, authentication flows, and dependency-security checklists.
 
-The `mkdir -p` command creates the directory if it does not already exist. `cd` moves into it, and `pwd` prints the current working directory.
-
-### Recommended options
-
-- **Ubuntu on WSL 2:** a convenient choice for students using a compatible Windows laptop.
-- **Ubuntu virtual machine:** useful for tasks that need a more complete isolated Linux system.
-- **Existing Linux system:** suitable when you have permission to use it for the course.
-- **Browser terminal:** useful for selected command-line exercises; availability of `sudo`, services, networking, and storage features may be limited.
-
-Use the environment specified by the instructor for each exercise. Do not use a production server, a shared university server, or another person's machine for experiments.
+Install software only from trusted official sources and follow the instructor's setup instructions. Do not scan, attack, or probe systems outside the authorised lab scope.
 
 ---
 
-## A Typical Operational Scenario
+## A Typical Security Scenario
 
-Imagine that a web application hosted on a Linux server becomes slow or unavailable. An administrator should gather evidence before making changes.
+Imagine that a student reports a suspicious login notification, or an application team discovers an unexpected authentication failure. A disciplined security practitioner should establish facts before taking action.
 
 ```text
-User reports a problem
+A report or alert is received
         ↓
-Inspect the service and recent logs
+Identify the affected asset and define the scope
         ↓
-Check CPU, memory, disk, and connectivity
+Collect relevant logs or other approved evidence
         ↓
-Form and test a likely explanation
+Assess the likely threat, impact, and risk
         ↓
-Make an authorised, limited change if needed
+Recommend or apply an authorised, limited control
         ↓
-Verify recovery and document the result
+Verify the result and document lessons learned
 ```
 
-This approach is relevant to web applications, APIs, databases, cloud virtual machines, container hosts, and CI/CD infrastructure. The goal is not to guess or restart everything; it is to identify the failing layer and act safely.
+This approach is relevant to web applications, endpoints, networks, cloud services, and software delivery. The aim is to make evidence-based decisions—not to guess, overreact, or perform unapproved testing.
 
 ---
 
 ## Safe Lab Guidelines
 
-- Work only in your own lab environment or one explicitly approved by the instructor.
-- Start with inspection commands before making changes.
-- Use `sudo` only when it is required, authorised, and understood.
-- Never expose passwords, private SSH keys, access tokens, or personal data in screenshots or shared files.
-- Do not disable a firewall or security feature simply to make a lab command work.
-- Avoid destructive commands and system-wide changes unless the exercise explicitly calls for them in an isolated lab.
-- For cloud resources, confirm the account, cost limits, and instructor approval before creating anything that could incur charges.
-- Record the command used, the observed result, and any conclusion you draw.
+- Work only on your own systems, instructor-provided exercises, or targets explicitly authorised for the activity.
+- Read the scope and instructions before starting any security lab.
+- Use fictional/sample data whenever possible.
+- Do not attempt to access another person's account or data.
+- Never publish passwords, MFA codes, API keys, access tokens, private keys, or sensitive logs.
+- Do not run scans or exploitation tools against public websites or university systems without written permission.
+- Keep intentionally vulnerable applications isolated from personal files, accounts, and production networks.
+- Do not disable security controls simply to make an exercise work.
+- Record the tool, action, observation, potential impact, and recommended mitigation.
+- If you discover a possible real vulnerability accidentally, stop testing and report it through the appropriate authorised channel.
 
 ---
 
 ## Who Should Use This Tutorial?
 
-This tutorial is intended for B.Tech students and beginners who want practical Linux skills for:
+This tutorial is intended for B.Tech students and beginners who want practical cybersecurity skills relevant to:
 
-- Software development and application deployment
-- Cloud computing and DevOps foundations
-- Technical support and production operations
-- System administration and infrastructure troubleshooting
-- Understanding the Linux environments used by servers and automation tools
+- Secure software development and web application testing
+- IT support and endpoint protection
+- Linux and system administration
+- Network security and traffic analysis
+- Cloud security and identity/access management
+- Security operations and incident-response foundations
+- Secure software delivery and dependency-risk awareness
 
-No prior system-administration experience is assumed. Basic familiarity with using a computer and typing commands will help.
+No prior professional cybersecurity experience is assumed. Basic computer literacy and willingness to follow lab instructions carefully will help.
 
 ---
 
 ## How to Use the Chapters
 
 1. Read the concept and scenario before starting the lab.
-2. Open the Linux environment required for that chapter.
-3. Type commands yourself and inspect their output.
-4. Complete the exercise and record your observations.
-5. Attempt the knowledge-check questions without looking at the notes.
-6. Keep your lab files organised so you can reuse them in later lectures.
+2. Check the prerequisites and confirm that the target or data is authorised for use.
+3. Follow the steps in the approved environment and record what you observe.
+4. Explain the security significance of the evidence—not just the tool output.
+5. Recommend a mitigation and describe how you would verify it.
+6. Attempt the knowledge-check questions without looking at the notes.
+7. Keep lab notes free of passwords, tokens, personal data, and other secrets.
 
-When a command behaves differently on your system, note the exact command, environment, and error message. Differences are useful evidence for troubleshooting.
+When a tool behaves differently on your system, record the environment, exact command or action, and error message. Treat the output as evidence to investigate, not as proof of a conclusion by itself.
 
 ---
 
 ## Key Takeaways
 
-- Linux administration is about understanding and operating a system safely—not just memorising commands.
-- The shell provides a practical interface to Linux utilities and administrative tools.
-- System administrators inspect evidence, test hypotheses, and verify changes.
-- Users, permissions, services, networking, storage, logs, and automation are connected parts of reliable operations.
-- Hands-on practice should take place in a controlled environment with least privilege and clear safety boundaries.
-- By the end of the 15 lectures, you will have practised a foundation of Linux operations and completed a troubleshooting-oriented capstone.
+- Cybersecurity combines people, processes, and technology; it is not limited to hacking tools.
+- Risk assessment connects assets, threats, vulnerabilities, likelihood, impact, and controls.
+- Account protection, least privilege, secure coding, patching, backups, and monitoring reduce common risks.
+- Logs and packet captures can support investigations when handled carefully and interpreted in context.
+- Web, endpoint, network, cloud, and software-delivery security are connected parts of a broader security practice.
+- Safe practice requires authorisation, clear scope, isolated labs, careful evidence handling, and verifiable mitigations.
+- By the end of the 15 lectures, you will have practised core security workflows and presented findings and mitigations in a mini-project assessment.
 
 ---
 
 ## Next Chapter
 
-👉 **Chapter 1: Linux Ecosystem, Distributions, Kernel, Shell, and Lab Setup**
+👉 **Chapter 1: Cybersecurity Foundations, CIA Triad, Threats, Vulnerabilities, and Risk**
