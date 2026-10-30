@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TutorialController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ChatbotController;
@@ -365,6 +366,12 @@ Route::prefix('tutorials')->group(function () {
     Route::get('/dotnet/frontend/{slug}', [TutorialController::class, 'show'])
         ->name('tutorial.dotnet.frontend.show');
 });
+
+Route::get('/industrial-training', [ProjectController::class, 'index'])
+    ->name('oolalabs.projects.index');
+Route::get('/industrial-training/{slug}', [ProjectController::class, 'show'])
+    ->where('slug', '[A-Za-z0-9_-]+')
+    ->name('oolalabs.projects.show');
 
 
 /*

@@ -1,0 +1,133 @@
+/* OolaLabs mega menu: intro followed by two balanced columns. */
+.oola-dropdown-menu--oolalabs {
+    /* Let Bootstrap control visibility: hidden by default, visible only when .show is applied. */
+    width: min(820px, calc(100vw - 2rem)) !important;
+    max-width: calc(100vw - 2rem);
+    padding: 1.25rem 1.35rem 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 1.1rem;
+    background: rgba(13, 13, 15, .98);
+    box-shadow: 0 24px 70px rgba(0,0,0,.42);
+    color: #f7f7f8;
+}
+/* Keep the mega menu closed until Bootstrap opens its dropdown. */
+.dropdown-menu.oola-dropdown-menu--oolalabs:not(.show) {
+    display: none !important;
+}
+.dropdown-menu.oola-dropdown-menu--oolalabs.show {
+    display: block !important;
+}
+.oola-oolalabs-intro {
+    padding: .15rem .4rem 1rem;
+    margin-bottom: .9rem;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.oola-oolalabs-eyebrow {
+    display: block;
+    margin-bottom: .4rem;
+    color: #31cdb8;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .13em;
+}
+.oola-dropdown-menu--oolalabs .oola-dropdown__title {
+    margin: 0 0 .7rem;
+    color: #31cdb8;
+    font-size: .79rem;
+    font-weight: 750;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.oola-dropdown-menu--oolalabs .oola-oolalabs-intro .oola-dropdown__title {
+    margin-bottom: .45rem;
+    font-size: 1rem;
+    letter-spacing: .02em;
+}
+.oola-dropdown-menu--oolalabs p {
+    margin-bottom: .55rem;
+    color: rgba(255,255,255,.74);
+    line-height: 1.55;
+    font-size: .94rem;
+}
+.oola-oolalabs-intro-bottom {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: .35rem 1rem;
+}
+.oola-oolalabs-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    color: #31cdb8;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.oola-oolalabs-menu-note {
+    color: rgba(255,255,255,.48);
+    font-size: .8rem;
+}
+.oola-oolalabs-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr) !important;
+    align-items: start;
+    gap: 1.4rem;
+    width: 100%;
+}
+.oola-oolalabs-grid > .oola-oolalabs-group { width: auto !important; max-width: none !important; }
+.oola-oolalabs-group { min-width: 0; padding: .15rem .4rem; }
+.oola-oolalabs-group + .oola-oolalabs-group {
+    border-left: 1px solid rgba(255,255,255,.1);
+    padding-left: 1.3rem;
+}
+.oola-dropdown-menu--oolalabs .oola-dropdown__list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: .1rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.oola-dropdown-menu--oolalabs .oola-dropdown__list li { min-width: 0; }
+.oola-dropdown-menu--oolalabs .oola-dropdown__list a {
+    display: block;
+    padding: .42rem .5rem;
+    border-radius: .45rem;
+    color: rgba(255,255,255,.8);
+    text-decoration: none;
+    font-size: .88rem;
+    line-height: 1.35;
+    transition: background-color .16s ease, color .16s ease, padding-left .16s ease;
+}
+.oola-dropdown-menu--oolalabs .oola-dropdown__list a:hover,
+.oola-dropdown-menu--oolalabs .oola-dropdown__list a:focus-visible {
+    background: rgba(49,205,184,.1);
+    color: #fff;
+    padding-left: .7rem;
+    outline: none;
+}
+.oola-oolalabs-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: .9rem;
+    padding: .85rem .4rem 0;
+    border-top: 1px solid rgba(255,255,255,.1);
+    color: rgba(255,255,255,.55);
+    font-size: .78rem;
+}
+.oola-oolalabs-footer a { color: #31cdb8; font-weight: 700; text-decoration: none; white-space: nowrap; }
+@media (max-width: 991.98px) {
+    .oola-dropdown-menu--oolalabs { width: min(92vw, 720px); left: 0; transform: none; }
+    .oola-oolalabs-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: .6rem; }
+    .oola-oolalabs-group + .oola-oolalabs-group { padding-left: .8rem; }
+    .oola-oolalabs-footer { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 575.98px) {
+    .oola-oolalabs-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .oola-oolalabs-group + .oola-oolalabs-group { border-left: 0; border-top: 1px solid rgba(255,255,255,.1); padding: .9rem .4rem 0; }
+}

@@ -1,0 +1,146 @@
+/* OolaLabs project catalogue: self-contained layout resilient to global theme CSS. */
+.project-category-tabs {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center;
+    gap: .65rem;
+    width: 100%;
+    margin-inline: auto;
+}
+.project-category-tabs .project-category-tab {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    padding: .65rem 1rem;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 999px;
+    color: #e9ecef;
+    background: rgba(255,255,255,.035);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: .94rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    box-shadow: none;
+    transition: color .18s ease, background-color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.project-category-tabs .project-category-tab:hover,
+.project-category-tabs .project-category-tab:focus-visible {
+    border-color: #31cdb8;
+    color: #31cdb8;
+    background: rgba(49,205,184,.08);
+    outline: none;
+}
+.project-category-tabs .project-category-tab.active {
+    color: #071311;
+    background: #31cdb8;
+    border-color: #31cdb8;
+}
+.project-tab-count {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.45rem;
+    height: 1.45rem;
+    padding: 0 .35rem;
+    border-radius: 999px;
+    color: inherit;
+    background: rgba(127,127,127,.18);
+    font-size: .75rem;
+    line-height: 1;
+}
+.project-category-tab.active .project-tab-count { background: rgba(0,0,0,.12); }
+.project-card-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch;
+    gap: 1.5rem;
+    width: 100%;
+}
+.project-card-grid__item { display: flex; min-width: 0; max-width: 100%; }
+.project-card-grid__item > .project-card { width: 100%; min-width: 0; }
+.project-card {
+    min-width: 0;
+    overflow: hidden;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.project-card:hover { transform: translateY(-3px); border-color: #31cdb8; }
+.project-card .eyebrow { overflow-wrap: anywhere; }
+.project-card h3 { overflow-wrap: anywhere; }
+.project-card p { overflow-wrap: anywhere; }
+.project-card__topline { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+.project-status {
+    display: inline-flex;
+    flex: 0 1 auto;
+    align-items: center;
+    justify-content: center;
+    max-width: 58%;
+    padding: .35rem .65rem;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 999px;
+    color: #f4f5f6;
+    background: rgba(148,163,184,.24);
+    font-size: .75rem;
+    font-weight: 650;
+    line-height: 1.25;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+.project-icon {
+    display: inline-flex;
+    width: 2.8rem;
+    height: 2.8rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: .85rem;
+    background: rgba(49,205,184,.12);
+    color: #31cdb8;
+    font-size: 1.4rem;
+}
+@media (max-width: 991.98px) {
+    .project-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1.1rem; }
+    .project-category-tabs { justify-content: flex-start; }
+}
+@media (max-width: 575.98px) {
+    .project-card-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 1rem; }
+    .project-category-tabs { justify-content: flex-start; gap: .5rem; }
+    .project-category-tabs .project-category-tab { padding: .55rem .8rem; font-size: .88rem; }
+    .project-card__topline { gap: .5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .project-category-tab, .project-card { transition: none; }
+    .project-category-tab:hover, .project-card:hover { transform: none; }
+}
+
+
+/* Distinct, accessible project lifecycle status colours */
+.project-status--proposed {
+    color: #ffe6a6;
+    background: rgba(217, 119, 6, .18);
+    border-color: rgba(245, 158, 11, .48);
+}
+.project-status--development {
+    color: #bfdbfe;
+    background: rgba(37, 99, 235, .20);
+    border-color: rgba(96, 165, 250, .48);
+}
+.project-status--available {
+    color: #a7f3d0;
+    background: rgba(5, 150, 105, .18);
+    border-color: rgba(52, 211, 153, .48);
+}
+.project-status--completed {
+    color: #e5e7eb;
+    background: rgba(107, 114, 128, .22);
+    border-color: rgba(156, 163, 175, .45);
+}
+
